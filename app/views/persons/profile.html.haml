@@ -1,0 +1,19 @@
+%h1.text-center.login-title Persons#profile
+%p Find me in app/views/persons/profile.html.erb
+%p.notice= notice
+%p.alert= alert
+
+.row
+  .col-sm-6.col-md-4.col-md-offset-4
+  - if user_signed_in?
+    %span
+      Здравствуйте, #{current_user.email}
+    - if current_user.confirmed?
+      %span (подтвержден)
+
+    - else
+      %span (не подтвержден)
+    = link_to 'Выйти', destroy_user_session_path, :method => :delete
+  - else
+  = link_to 'Войти', new_user_session_path
+  или #{link_to 'Зарегистрироваться', new_user_registration_path}
