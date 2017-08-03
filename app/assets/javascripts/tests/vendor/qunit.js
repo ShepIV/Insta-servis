@@ -3688,7 +3688,7 @@ QUnit.diff = ( function() {
 		 * Closure, but does not reference any external variables.
 		 * @param {string} longtext Longer string.
 		 * @param {string} shorttext Shorter string.
-		 * @param {number} i Start index of quarter length substring within longtext.
+		 * @param {number} i Start profile of quarter length substring within longtext.
 		 * @return {Array.<string>} Five element Array, containing the prefix of
 		 *     longtext, the suffix of longtext, the prefix of shorttext, the suffix
 		 *     of shorttext and the common middle.  Or null if there was no match.

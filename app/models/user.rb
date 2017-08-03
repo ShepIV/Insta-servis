@@ -10,7 +10,7 @@ class User < ApplicationRecord
          :confirmable
 
 
-  #mount_uploader :avatar, AvatarUploader
+  mount_uploader :image, ImageUploader
 
-  has_attached_file :avatar, :styles => { :thumb => "75x75>", :small => "150x150>" }
+  #has_attached_file :avatar, :styles => { :thumb => "75x75>", :small => "150x150>" }
 end

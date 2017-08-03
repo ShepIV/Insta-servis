@@ -2,12 +2,12 @@ Rails.application.routes.draw do
   devise_for :users
   resources :posts
   
- # root 'posts#index'
-  root 'home#index'
+ #root 'posts#profile'
+  root 'users#profile'
 
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
 
-  get 'persons/profile', as: 'user_root'
+  get 'users/profile', as: 'user_root'
   
 
 end

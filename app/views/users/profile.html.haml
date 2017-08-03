@@ -1,5 +1,4 @@
-%h1.text-center.login-title Persons#profile
-%p.text-center Find me in app/views/persons/profile.html.erb
+%h3.text-center.login-title Users#profile
 %p.text-center.notice= notice
 %p.text-center.alert= alert
 
@@ -14,6 +13,7 @@
     - else
       %span (не подтвержден)
     = link_to 'Выйти', destroy_user_session_path, :method => :delete
+
 
   - else
   = link_to 'Войти', new_user_session_path
