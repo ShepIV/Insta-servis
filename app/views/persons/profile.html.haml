@@ -14,7 +14,7 @@
     - else
       %span (не подтвержден)
     = link_to 'Выйти', destroy_user_session_path, :method => :delete
-
+= form_for
   - else
   = link_to 'Войти', new_user_session_path
   или #{link_to 'Зарегистрироваться', new_user_registration_path}

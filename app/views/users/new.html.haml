@@ -1,0 +1,12 @@
+- if !@user.error.empty?
+  .alter.alter-error
+    %ul
+      - @user.errors.full_messages.each do |msg|
+        %li msg
+.well
+  = form_for @user, html: { multipart: true } do |f|
+    = f.label :title
+    = f.text_field :title
+    = f.label :image
+    = f.file_field :image
+    = f.submit "Save", class: "btn btn-primary"

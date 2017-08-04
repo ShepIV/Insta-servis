@@ -2,19 +2,34 @@
 %p.text-center.notice= notice
 %p.text-center.alert= alert
 
+- if !flash[:notice].blank?
+  .alert.alert-info
+    = flash[:notice]
+
 .row
-  .col-sm-6.col-md-4.col-md-offset-4
+  .col-sm-6.col-md-4
   - if user_signed_in?
     %span
       Здравствуйте, #{current_user.email}
-    - if current_user.confirmed?
-      %span (подтвержден)
-
-    - else
-      %span (не подтвержден)
+      - if current_user.confirmed?
+        %span (подтвержден)
+      - else
+        %span (не подтвержден)
     = link_to 'Выйти', destroy_user_session_path, :method => :delete
-
+    .col-md-3.col-md-offset-3
+    .card
+      .card-block
+        = form_for :user, :html => {:multipart => true} do |f|
+          .field.text-center
+            = f.label :title
+            = f.file_field :image
+            %p
+              = f.label :remote_image_url, "or image URL"
+            %p
+              = f.text_field :remote_image_url
+              = f.submit
 
   - else
-  = link_to 'Войти', new_user_session_path
-  или #{link_to 'Зарегистрироваться', new_user_registration_path}
+    = link_to 'Войти', new_user_session_path
+    или #{link_to 'Зарегистрироваться', new_user_registration_path}
+

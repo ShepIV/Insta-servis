@@ -8,6 +8,6 @@ Rails.application.routes.draw do
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
 
   get 'users/profile', as: 'user_root'
-  
+  get 'users/show', as: 'users'
 
 end

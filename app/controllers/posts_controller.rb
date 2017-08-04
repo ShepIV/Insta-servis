@@ -1,16 +1,15 @@
 class PostsController < ApplicationController
 
   def index
-    @post = Post.new
+    @posts = Post.all
   end
 
   def show
-    @post_attachments = @post.post_attachments.all
+
   end
 
   def new
     @post = Post.new
-    @post_attachment = @post.post_attachments.build
   end
 
   def edit
@@ -21,12 +20,11 @@ class PostsController < ApplicationController
 
     respond_to do |format|
       if @post.save
-        params[:post_attachments]['avatar'].each do |a|
-          @post_attachment = @post.post_attachments.create!(:avatar => a, :post_id => @post.id)
-        end
         format.html { redirect_to @post, notice: 'Post was successfully created.' }
+        format.json { render :show, status: :created, location: @post }
       else
-        format.html { render action: 'new' }
+        format.html { render :new }
+        format.json { render json: @post.errors, status: :unprocessable_entity }
       end
     end
     end
@@ -51,7 +49,7 @@ class PostsController < ApplicationController
       format.html { redirect_to posts_url, notice: 'Post was successfully destroyed.' }
       format.json { head :no_content }
     end
-
+  end
 
     private
     # Use callbacks to share common setup or constraints between actions.
@@ -61,6 +59,8 @@ class PostsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def post_params
-      params.require(:post).permit(:title)
+      params.require(:post).permit(:title, :image, :description)
     end
 end
+
+

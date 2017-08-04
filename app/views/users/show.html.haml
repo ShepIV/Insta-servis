@@ -1,0 +1,10 @@
+#paintings
+  - @user.image.each do |user|
+    .painting
+      = image_tag user.image_url.to_s
+      .name= user.name
+      .actions
+        = link_to "edit", edit_user_path(image)
+        |
+        \#{link_to "remove", painting, :confirm => 'Are you sure?', :method => :delete}
+  .clear
