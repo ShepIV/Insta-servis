@@ -1,20 +1,25 @@
-%p#notice= notice
-%h1 Posts
+%h1.text-center Listing posts
+
 %table
   %thead
     %tr
-      %th Title
-      %th Image
-      %th Description
-      %th{:colspan => "3"}
+      %th.text-center Name
+      %th.text-center Description
+      %th.text-center Image
+      %th
+      %th
+      %th
+
   %tbody
     - @posts.each do |post|
       %tr
-        %td= post.title
-        %td= post.image
+        %td= post.name
         %td= post.description
+        %td= post.image
         %td= link_to 'Show', post
         %td= link_to 'Edit', edit_post_path(post)
-        %td= link_to 'Destroy', post, method: :delete, data: { confirm: 'Are you sure?' }
-%br/
+        %td= link_to 'Destroy', post, :method => :delete, :data => { :confirm => 'Are you sure?' }
+
+%br
+
 = link_to 'New Post', new_post_path
