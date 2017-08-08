@@ -1,7 +1,7 @@
 #paintings
-  - @user.image.each do |user|
+  - @posts.image.each do |post|
     .painting
-      = image_tag user.image_url.to_s
+      = image_tag post.image
       .name= user.name
       .actions
         = link_to "edit", edit_user_path(image)
