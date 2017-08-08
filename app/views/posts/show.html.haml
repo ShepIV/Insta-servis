@@ -6,9 +6,8 @@
 
 %p
   %b Image:
-  = @post.image
-  /= image_tag @post.image.thumb.url
-  /TODO display image
+  = image_tag @post.image.thumb
+
 
 %p
   %b Description:
