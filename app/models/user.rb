@@ -10,10 +10,12 @@ class User < ApplicationRecord
          :confirmable
 
 
-  #mount_uploader :image, ImageUploader
+  mount_uploader :avatar, AvatarUploader
   has_many :posts
-  has_one :avatar
-  validates :name, presence: true
+  has_one :profile, dependent: :destroy
+  #validates :name, presence: true
+
+  after_create :create_profile
 
   #attr_accessible :image, :image_cash, :remote_image
   #has_attached_file :avatar, :styles => { :thumb => "75x75>", :small => "150x150>" }

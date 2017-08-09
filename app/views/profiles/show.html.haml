@@ -1,0 +1,77 @@
+%h3.text-center.login-title Users#profile
+%p.text-center.notice= notice
+%p.text-center.alert= alert
+
+- if !flash[:notice].blank?
+  .alert.alert-info
+    = flash[:notice]
+
+.row
+  .col-sm-6.col-md-4
+  - if user_signed_in?
+    %span
+      Здравствуйте, #{current_user.email}
+      - if current_user.confirmed?
+        %span (подтвержден)
+      - else
+        %span (не подтвержден)
+    = link_to 'Выйти', destroy_user_session_path, :method => :delete
+    %h2.text_center
+    = link_to 'Listing posts', posts_path
+    %head
+  - else
+    = link_to 'Войти', new_user_session_path
+    или #{link_to 'Зарегистрироваться', new_user_registration_path}
+
+.col-lg-6.col-sm-6
+  .card.hovercard
+    -#.card-background
+      -#%img.card-bkimg{:alt => "", :src => "#{@profile.avatar.url}"}/
+    / http://lorempixel.com/850/280/people/9/
+    .useravatar
+      %img{:alt => "", :src => "#{@profile.avatar.url}"}/
+    .card-info
+      %span.card-title= @profile.first_name
+  .btn-pref.btn-group.btn-group-justified.btn-group-lg{"aria-label" => "...", :role => "group"}
+    .btn-group{:role => "group"}
+      %button#stars.btn.btn-primary{"data-toggle" => "tab", :href => "#tab1", :type => "button"}
+        %span.glyphicon.glyphicon-star{"aria-hidden" => "true"}
+        .hidden-xs Stars
+    .btn-group{:role => "group"}
+      %button#favorites.btn.btn-default{"data-toggle" => "tab", :href => "#tab2", :type => "button"}
+        %span.glyphicon.glyphicon-heart{"aria-hidden" => "true"}
+        .hidden-xs Favorites
+    .btn-group{:role => "group"}
+      %button#following.btn.btn-default{"data-toggle" => "tab", :href => "#tab3", :type => "button"}
+        %span.glyphicon.glyphicon-user{"aria-hidden" => "true"}
+        .hidden-xs Following
+  .well
+    .tab-content
+      #tab1.tab-pane.fade.in.active
+        %h3 This is tab 1
+      #tab2.tab-pane.fade.in
+        %h3 This is tab 2
+      #tab3.tab-pane.fade.in
+        %h3 This is tab 3
+
+%p#notice= notice
+
+%p
+  -#%a{:href => profile.avatar}
+  %b Avatar:
+  -#= @profile.avatar
+  = image_tag @profile.avatar
+%p
+  %b First name:
+  = @profile.first_name
+%p
+  %b Second name:
+  = @profile.second_name
+%p
+  %b User:
+  = @profile.user_id
+
+= link_to 'Edit', edit_profile_path(@profile)
+\|
+= link_to 'Back', profiles_path
+

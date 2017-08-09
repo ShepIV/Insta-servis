@@ -1,6 +1,7 @@
 Rails.application.routes.draw do
   resources :avatars
   devise_for :users
+  resources :profiles
   resources :posts
   
  #root 'posts#profile'

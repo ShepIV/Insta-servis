@@ -2,7 +2,6 @@ class UsersController < ApplicationController
 
   def profile
     @posts = Post.all
-
   end
 
   def show
@@ -15,6 +14,6 @@ class UsersController < ApplicationController
 
   private
   def users_params
-    params.require(:user).premit(:title, :content, :image)
+    params.require(:user).permit(:title, :content, :image)
   end
 end

@@ -24,7 +24,7 @@ class AvatarsController < ApplicationController
   # POST /avatars
   # POST /avatars.json
   def create
-    @avatar = Avatar.new(avatar_params)
+    @avatar = current_user.build_avatar(avatar_params)
 
     respond_to do |format|
       if @avatar.save
