@@ -23,53 +23,113 @@
     = link_to 'Войти', new_user_session_path
     или #{link_to 'Зарегистрироваться', new_user_registration_path}
 
-.col-lg-6.col-sm-6
-  .card.hovercard
-    -#.card-background
-      -#%img.card-bkimg{:alt => "", :src => "#{@profile.avatar.url}"}/
-    / http://lorempixel.com/850/280/people/9/
-    .useravatar
-      %img{:alt => "", :src => "#{@profile.avatar.url}"}/
-    .card-info
-      %span.card-title= @profile.first_name
-  .btn-pref.btn-group.btn-group-justified.btn-group-lg{"aria-label" => "...", :role => "group"}
-    .btn-group{:role => "group"}
-      %button#stars.btn.btn-primary{"data-toggle" => "tab", :href => "#tab1", :type => "button"}
-        %span.glyphicon.glyphicon-star{"aria-hidden" => "true"}
-        .hidden-xs Stars
-    .btn-group{:role => "group"}
-      %button#favorites.btn.btn-default{"data-toggle" => "tab", :href => "#tab2", :type => "button"}
-        %span.glyphicon.glyphicon-heart{"aria-hidden" => "true"}
-        .hidden-xs Favorites
-    .btn-group{:role => "group"}
-      %button#following.btn.btn-default{"data-toggle" => "tab", :href => "#tab3", :type => "button"}
-        %span.glyphicon.glyphicon-user{"aria-hidden" => "true"}
-        .hidden-xs Following
+%head
+  %link{:href => "//netdna.bootstrapcdn.com/twitter-bootstrap/2.3.2/css/bootstrap-combined.min.css", :rel => "stylesheet"}/
+  %script{:src => "//cdnjs.cloudflare.com/ajax/libs/jquery/2.0.1/jquery.min.js"}
+  %header.clearfix.feed-header{"data-role" => "banner"}
+
+%body
+  .profile-user
+    .row-fluid
+      .span6
+        .pull-left{:style => "margin-right:450px"}
+          %img.img-thumbnail{:src => "#{@profile.avatar.url}"}/
+        %h2 #{@profile.first_name}
+        %h2 #{@profile.second_name}
+        %p
+          %strong #{@profile.first_name}
+          %a{:href => "#"} http://localhost:3000/profiles/#{@profile.id}
+      .span6
+        %ul.inline.user-counts-list
+          %li
+            Photos
+            %span.users.posts.count
+          %li
+            Followers
+            %span.count 50
+          %li
+            Following
+            %span.count 130
+%ul.nav.nav-tabs{:role => "tablist"}
+  %li.nav-item
+    %a.nav-link.active{"data-toggle" => "tab", :href => "#profile", :role => "tab"} profile
+  %li.nav-item
+    %a.nav-link{"data-toggle" => "tab", :href => "#buzz", :role => "tab"} buzz
+  %li.nav-item
+    %a.nav-link{"data-toggle" => "tab", :href => "#references", :role => "tab"} references
+/ Tab panes
+.tab-content
+  #profile.tab-pane.fade.in.active{:role => "tabpanel"}
+    %p
+      -#%a{:href => profile.avatar}
+      %b Avatar:
+      -#= @profile.avatar
+      = image_tag @profile.avatar
+      %p
+        %b First name:
+        = @profile.first_name
+      %p
+        %b Second name:
+        = @profile.second_name
+      %p
+        %b profile_User`s:
+        = @profile.user_id
+  #buzz.tab-pane.fade{:role => "tabpanel"}
+    %p
+      %b Posts:
+      - @profile.user.posts.each do |post|
+        = post.name
+        = image_tag post.image
+  #references.tab-pane.fade{:role => "tabpanel"} ccc
+
+.btn-pref.btn-group.btn-group-justified.btn-group-lg{"aria-label" => "...", :role => "group"}
+  .btn-group{:role => "group"}
+    %button#stars.btn.btn-primary{"data-toggle" => "tab", :href => "#tab1", :type => "button"}
+      %span.glyphicon.glyphicon-star{"aria-hidden" => "true"}
+      .hidden-xs Stars
+  .btn-group{:role => "group"}
+    %button#favorites.btn.btn-default{"data-toggle" => "tab", :href => "#tab2", :type => "button"}
+      %span.glyphicon.glyphicon-heart{"aria-hidden" => "true"}
+      .hidden-xs Favorites
+  .btn-group{:role => "group"}
+    %button#following.btn.btn-default{"data-toggle" => "tab", :href => "#tab3", :type => "button"}
+      %span.glyphicon.glyphicon-user{"aria-hidden" => "true"}
+      .hidden-xs Following
   .well
     .tab-content
       #tab1.tab-pane.fade.in.active
         %h3 This is tab 1
+        %p
+          -#%a{:href => profile.avatar}
+          %b Avatar:
+          -#= @profile.avatar
+          = image_tag @profile.avatar
+        %p
+          %b First name:
+          = @profile.first_name
+        %p
+          %b Second name:
+          = @profile.second_name
+        %p
+          %b User:
+          = @profile.user_id
       #tab2.tab-pane.fade.in
         %h3 This is tab 2
       #tab3.tab-pane.fade.in
         %h3 This is tab 3
+        %p
+          %b Posts:
+          - @profile.user.posts.each do |post|
+            = post.name
+            = image_tag post.image
+
+
 
 %p#notice= notice
 
-%p
-  -#%a{:href => profile.avatar}
-  %b Avatar:
-  -#= @profile.avatar
-  = image_tag @profile.avatar
-%p
-  %b First name:
-  = @profile.first_name
-%p
-  %b Second name:
-  = @profile.second_name
-%p
-  %b User:
-  = @profile.user_id
+
+
+
 
 = link_to 'Edit', edit_profile_path(@profile)
 \|
