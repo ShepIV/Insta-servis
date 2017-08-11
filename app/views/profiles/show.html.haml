@@ -1,70 +1,119 @@
-%h3.text-center.login-title Users#profile
-%p.text-center.notice= notice
-%p.text-center.alert= alert
+%link{:href => "//netdna.bootstrapcdn.com/twitter-bootstrap/2.3.2/css/bootstrap-combined.min.css", :rel => "stylesheet"}/
+%script{:src => "//cdnjs.cloudflare.com/ajax/libs/jquery/2.0.1/jquery.min.js"}
 
-- if !flash[:notice].blank?
-  .alert.alert-info
-    = flash[:notice]
+.form-group
+  - if !flash[:notice].blank?
+    .alert.alert-info
+      = flash[:notice]
 
-.row
-  .col-sm-6.col-md-4
-  - if user_signed_in?
-    %span
-      Здравствуйте, #{current_user.email}
-      - if current_user.confirmed?
-        %span (подтвержден)
-      - else
-        %span (не подтвержден)
-    = link_to 'Выйти', destroy_user_session_path, :method => :delete
-    %h2.text_center
-    = link_to 'Listing posts', posts_path
-    %head
-  - else
-    = link_to 'Войти', new_user_session_path
-    или #{link_to 'Зарегистрироваться', new_user_registration_path}
+    /todo вход пользователя не на свой профиль
+
+
+
+  = link_to 'Edit', edit_profile_path(@profile)
+  \|
+  = link_to 'Back', profiles_path
+  %link{:href => "https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css", :rel => "stylesheet"}/
+.container
+  .row
+    .span2
+      %img.img-circle{:alt => "Cinque Terre", :width => "304", :height => "300", :src => "#{@profile.avatar.url}"}/
+    .span4
+      %blockquote
+        %p #{@profile.first_name} #{@profile.second_name}
+        %small
+          %cite{:title => "Source Title"}
+            - if current_user.confirmed?
+              %span (подтвержден)
+            - else
+              %span (не подтвержден)
+            %i.icon-map-marker
+              -#%p#notice= notice
+      %p
+        %i.icon-envelope
+        #{@profile.user.email}
+        %br/
+        %i.icon-globe
+        %a{:href => "#"} http://localhost:3000/profiles/#{@profile.id}
+        %br/
+        -#%i.icon-gift
+        -#January 30, 1974
+        .span6
+      %ul.inline.user-counts-list
+        %li
+          Photos #{current_user.posts.count}
+          %span.users.posts.count
+        %li
+          Followers
+          %span.count 0
+        %li
+          Following
+          %span.count 0
+        - if user_signed_in?
+          %span
+          %p
+          = link_to 'Выйти', destroy_user_session_path, :method => :delete
+          %p
+          = link_to 'Listing posts', posts_path
+          %head
+        - else
+          = link_to 'Войти', new_user_session_path
+          или #{link_to 'Зарегистрироваться', new_user_registration_path}
+
+        - if current_user && current_user.profile == @profile
+          %span
+          = link_to 'Edit', edit_profile_path(@profile)
+        - else
+          %span чужой аккаунт
+      /todo вход пользователя не на свой профиль
+      %p#notice= notice
+      %p.text-center.notice= notice
+      %p.text-center.alert= alert
+
+
 
 %head
-  %link{:href => "//netdna.bootstrapcdn.com/twitter-bootstrap/2.3.2/css/bootstrap-combined.min.css", :rel => "stylesheet"}/
-  %script{:src => "//cdnjs.cloudflare.com/ajax/libs/jquery/2.0.1/jquery.min.js"}
-  %header.clearfix.feed-header{"data-role" => "banner"}
+  -#%link{:href => "//netdna.bootstrapcdn.com/twitter-bootstrap/2.3.2/css/bootstrap-combined.min.css", :rel => "stylesheet"}/
+
 
 %body
-  .profile-user
-    .row-fluid
-      .span6
-        .pull-left{:style => "margin-right:450px"}
-          %img.img-thumbnail{:src => "#{@profile.avatar.url}"}/
-        %h2 #{@profile.first_name}
-        %h2 #{@profile.second_name}
-        %p
-          %strong #{@profile.first_name}
-          %a{:href => "#"} http://localhost:3000/profiles/#{@profile.id}
-      .span6
-        %ul.inline.user-counts-list
-          %li
-            Photos
-            %span.users.posts.count
-          %li
-            Followers
-            %span.count 50
-          %li
-            Following
-            %span.count 130
+-#.profile-user
+-#  .row-fluid
+-#    .span6
+-#      .pull-left{:style => "margin-right:450px"}
+-#        %img.img-thumbnail{:src => "#{@profile.avatar.url}"}/
+-#      %h2 #{@profile.first_name}
+-#      %h2 #{@profile.second_name}
+-#      %p
+-#        %strong #{@profile.first_name}
+-#        %a{:href => "#"} http://localhost:3000/profiles/#{@profile.id}
+
+    .span6
+      %ul.inline.user-counts-list
+        %li
+          Photos #{current_user.posts.count}
+          %span.users.posts.count
+        %li
+          Followers
+          %span.count 0
+        %li
+          Following
+          %span.count 0
 %ul.nav.nav-tabs{:role => "tablist"}
   %li.nav-item
     %a.nav-link.active{"data-toggle" => "tab", :href => "#profile", :role => "tab"} profile
   %li.nav-item
-    %a.nav-link{"data-toggle" => "tab", :href => "#buzz", :role => "tab"} buzz
+    %a.nav-link{"data-toggle" => "tab", :href => "#buzz", :role => "tab"} posts
   %li.nav-item
-    %a.nav-link{"data-toggle" => "tab", :href => "#references", :role => "tab"} references
+    %a.nav-link{"data-toggle" => "tab", :href => "#references", :role => "tab"} news
 / Tab panes
 .tab-content
   #profile.tab-pane.fade.in.active{:role => "tabpanel"}
     %p
       -#%a{:href => profile.avatar}
-      %b Avatar:
-      -#= @profile.avatar
-      = image_tag @profile.avatar
+      -#%b Avatar:
+      -#-#= @profile.avatar
+      -#= image_tag @profile.avatar
       %p
         %b First name:
         = @profile.first_name
@@ -75,14 +124,38 @@
         %b profile_User`s:
         = @profile.user_id
   #buzz.tab-pane.fade{:role => "tabpanel"}
-    %p
-      %b Posts:
-      - @profile.user.posts.each do |post|
-        = post.name
-        = image_tag post.image
-  #references.tab-pane.fade{:role => "tabpanel"} ccc
 
-.btn-pref.btn-group.btn-group-justified.btn-group-lg{"aria-label" => "...", :role => "group"}
+    .feed-photos
+      .row-fluid
+        .span12
+          - @profile.user.posts.each_slice(6) do |posts|
+            %ul.thumbnails.user-media-thumbnails
+              - posts.each do |post|
+                %li.span2
+                  %a.thumbnail{:href => post.image}
+                    %img{:src => post.image}/
+                    .meta
+                      %i.icon-heart
+                      3
+                      %i.icon-comment
+                      0
+  #references.tab-pane.fade{:role => "tabpanel"} news
+
+  -#  %p
+  -#    %b Posts:
+  -#    - @profile.user.posts.each do |post|
+  -#      %p
+  -#        %b.h3
+  -#        = post.name
+  -#      %p
+  -#        %b
+  -#        = post.created_at
+  -#      %p
+  -#        %b
+  -#        = image_tag post.image
+  -##references.tab-pane.fade{:role => "tabpanel"} ccc
+
+-#.btn-pref.btn-group.btn-group-justified.btn-group-lg{"aria-label" => "...", :role => "group"}
   .btn-group{:role => "group"}
     %button#stars.btn.btn-primary{"data-toggle" => "tab", :href => "#tab1", :type => "button"}
       %span.glyphicon.glyphicon-star{"aria-hidden" => "true"}
@@ -123,15 +196,126 @@
             = post.name
             = image_tag post.image
 
+-#
+-#%head
+-#  %link{:href => "//netdna.bootstrapcdn.com/twitter-bootstrap/2.3.2/css/bootstrap-combined.min.css", :rel => "stylesheet"}/
+-#  %script{:src => "//cdnjs.cloudflare.com/ajax/libs/jquery/2.0.1/jquery.min.js"}
+-#  %header.clearfix.feed-header{"data-role" => "banner"}
+-#    - @profile.user.posts.each_with_index do |post, index|
+-#      .compWrapper
+-#        .compInnerWrapper
+-#          #cycler1.compContainer
+-#            .compPhoto{class: "compPhoto#{index+1}"}
+-#              %a{:href => post.image}
+-#                .Image.iWithTransition
+-#                  %img{:src => post.image}/
+-#                  %b.compPhotoShadow
+            -#.compPhoto.compPhoto2
+            -#  %a{:href => "#"}
+            -#    .Image.iLoaded.iWithTransition
+            -#      %img{:src => "http://placehold.it/225x225/545454/fff&text=photo2"}/
+            -#      %b.compPhotoShadow
+            -#.compPhoto.compPhoto3
+            -#  %a{:href => "#"}
+            -#    .Image.iWithTransition
+            -#      %img{:src => "http://placehold.it/425x425/157B86/fff&text=photo3"}/
+            -#      %b.compPhotoShadow
+            -#.compPhoto.compPhoto4
+            -#  %a{:href => "#"}
+            -#    .Image.iWithTransition
+            -#      %img{:src => "http://placehold.it/250x250/222/fff&text=photo4"}/
+            -#      %b.compPhotoShadow
+            -#.compPhoto.compPhoto5
+            -#  %a{:href => "#"}
+            -#    .Image.iWithTransition
+            -#      %img{:src => "http://placehold.it/220x220/444/fff&text=photo5"}/
+            -#      %b.compPhotoShadow
+            -#.compPhoto.compPhoto6
+            -#  %a{:href => "#"}
+            -#    .Image.iWithTransition
+            -#      %img{:src => "http://placehold.it/230x230/333/fff&text=photo6"}/
+            -#      %b.compPhotoShadow
+            -#.compPhoto.compPhoto7
+            -#  %a{:href => "#"}
+            -#    .Image.iWithTransition
+            -#      %img{:src => "http://placehold.it/250x250/555/fff&text=photo7"}/
+            -#      %b.compPhotoShadow
+-#%body
+-#  .profile-user
+-#    .row-fluid
+-#      .span6
+-#        .pull-left{:style => "margin-right:15px"}
+-#          %img.img-polaroid{:src => "http://www.gravatar.com/avatar/f6112e781842d6a2b4636b35451401ff?s=80&d=mm&r=g"}/
+-#        %h2 jonniespratley
+-#        %p
+-#          %strong Jonnie Spratley
+-#          %a{:href => "#"} http://jonniespratley.me
+-#      .span6
+-#        %ul.inline.user-counts-list
+-#          %li
+-#            Photos
+-#            %span.count 100
+-#          %li
+-#            Followers
+-#            %span.count 50
+-#          %li
+-#            Following
+-#            %span.count 130
+-#  .feed-photos
+-#    .row-fluid
+-#      - @profile.user.posts.each_with_index do |post, index|
+-#        .span12
+-#          %ul.thumbnails.user-media-thumbnails
+-#            %li.span2
+-#              %a.thumbnail{:href => post.image}
+-#                %img{:src => post.image}/
+-#                .meta
+-#                  %i.icon-heart
+-#                  3
+-#                  %i.icon-comment
+-#                  0
+-#            %li.span2
+-#              %a.thumbnail{:href => "#"}
+-#                %img{:src => "http://placehold.it/150x150"}/
+-#                .meta
+-#                  %i.icon-heart
+-#                  3
+-#                  %i.icon-comment
+-#                  0
+-#            %li.span2
+-#              %a.thumbnail{:href => "#"}
+-#                %img{:src => "http://placehold.it/150x150"}/
+-#                .meta
+-#                  %i.icon-heart
+-#                  3
+-#                  %i.icon-comment
+-#                  0
+-#            %li.span2
+-#              %a.thumbnail{:href => "#"}
+-#                %img{:src => "http://placehold.it/150x150"}/
+-#                .meta
+-#                  %i.icon-heart
+-#                  3
+-#                  %i.icon-comment
+-#                  0
+-#            %li.span2
+-#              %a.thumbnail{:href => "#"}
+-#                %img{:src => "http://placehold.it/150x150"}/
+-#                .meta
+-#                  %i.icon-heart
+-#                  3
+-#                  %i.icon-comment
+-#                  0
+-#            %li.span2
+-#              %a.thumbnail{:href => "#"}
+-#                %img{:src => "http://placehold.it/150x150"}/
+-#                .meta
+-#                  %i.icon-heart
+-#                  3
+-#                  %i.icon-comment
+-#                  0
 
 
-%p#notice= notice
 
 
-
-
-
-= link_to 'Edit', edit_profile_path(@profile)
-\|
-= link_to 'Back', profiles_path
 

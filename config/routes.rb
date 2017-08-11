@@ -1,6 +1,10 @@
 Rails.application.routes.draw do
   resources :avatars
-  devise_for :users
+  devise_for :users do
+    post 'follow',   to: 'socializations#follow'
+    post 'unfollow', to: 'socializations#unfollow'
+  end
+
   resources :profiles
   resources :posts
   

@@ -14,7 +14,8 @@
   %tbody
     - @profiles.each do |profile|
       %tr
-        %td #{profile.avatar}
+        -#%td= image_tag profile.user.post.image
+        %td= image_tag profile.user.avatar
         %td= profile.first_name
         %td= profile.second_name
         %td= profile.user_id

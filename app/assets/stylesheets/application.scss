@@ -13,7 +13,7 @@
 
  */
 @import "bootstrap";
-
-body{
-  background-image: image-url('/bg.jpg');
-}
+@import "profile2";
+@import "devise";
+@import "profiles";
+//@import "users";

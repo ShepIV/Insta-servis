@@ -1,4 +1,5 @@
 class UsersController < ApplicationController
+  #before_filter :load_socializable
 
   def profile
     @posts = Post.all
@@ -8,6 +9,15 @@ class UsersController < ApplicationController
     @users = User.new
   end
 
+  def follow
+    current_user.follow!(@socializable)
+    render json: { follow: true }
+  end
+
+  def unfollow
+    current_user.unfollow!(@socializable)
+    render json: { follow: false }
+  end
 
 
 
@@ -16,4 +26,6 @@ class UsersController < ApplicationController
   def users_params
     params.require(:user).permit(:title, :content, :image)
   end
+
+
 end

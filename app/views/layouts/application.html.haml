@@ -1,32 +1,34 @@
 !!!
 %html
   %head
+
     %meta{:content => "text/html; charset=UTF-8", "http-equiv" => "Content-Type"}/
     %title Servis
     = csrf_meta_tags
     = stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track': 'reload'
     = javascript_include_tag 'application', 'data-turbolinks-track': 'reload'
 
-%nav.navbar.navbar-toggleable-md.navbar-light.bg-faded
-  %button.navbar-toggler.navbar-toggler-right{"aria-controls" => "navbarSupportedContent", "aria-expanded" => "false", "aria-label" => "Toggle navigation", "data-target" => "#navbarSupportedContent", "data-toggle" => "collapse", :type => "button"}
-    %span.navbar-toggler-icon
-  %a.navbar-brand{:href => "http://localhost:3000/users/profile"} Servis
-  #navbarSupportedContent.collapse.navbar-collapse
-    %ul.navbar-nav.mr-auto
-      %li.nav-item.active
-        %a.nav-link{:href => "http://localhost:3000/posts"}
-          Posts
-          %span.sr-only (current)
-      %li.nav-item
-        %a.nav-link{:href => "http://localhost:3000/users/profile"} Profile/posts
-      %li.nav-item
-        %a.nav-link{:href => "http://localhost:3000/users/sign_in"} login
-      %li.nav-item
-        %a.nav-link{:href => "http://localhost:3000/profiles"} profile
+
+%body.header-bg
+  %nav.navbar.navbar-toggleable-md.navbar-light.bg-faded
+    %button.navbar-toggler.navbar-toggler-right{"aria-controls" => "navbarSupportedContent", "aria-expanded" => "false", "aria-label" => "Toggle navigation", "data-target" => "#navbarSupportedContent", "data-toggle" => "collapse", :type => "button"}
+      %span.navbar-toggler-icon
+    %a.navbar-brand{:href => "http://localhost:3000/profiles/#{current_user.profile.id}"} Servis
+    #navbarSupportedContent.collapse.navbar-collapse
+      %ul.navbar-nav.mr-auto
+        %li.nav-item.active
+          %a.nav-link{:href => "http://localhost:3000/posts"}
+            Posts
+            %span.sr-only (current)
         %li.nav-item
-        %a.nav-link{:href => "http://localhost:3000/users/sign_up"} sign_up
-    %form.form-inline.my-2.my-lg-0
-      %input.form-control.mr-sm-2{:placeholder => "Search", :type => "text"}/
-      %button.btn.btn-outline-success.my-2.my-sm-0{:type => "submit"} Search
-%body
+          %a.nav-link{:href => "http://localhost:3000/profiles/#{}"} Profile/posts
+        %li.nav-item
+          %a.nav-link{:href => "http://localhost:3000/users/sign_in"} login
+        %li.nav-item
+          %a.nav-link{:href => "http://localhost:3000/profiles/#{}"} profile
+          %li.nav-item
+          %a.nav-link{:href => "http://localhost:3000/users/sign_up"} sign_up
+      %form.form-inline.my-2.my-lg-0
+        %input.form-control.mr-sm-2{:placeholder => "Search", :type => "text"}/
+        %button.btn.btn-outline-success.my-2.my-sm-0{:type => "submit"} Search
   = yield
