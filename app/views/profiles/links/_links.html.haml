@@ -1,0 +1,5 @@
+- if current_user.follows?(@profile.user)
+  = link_to('Unfollow', follow_profile_path(@profile.id), method: :post)
+- else
+  = link_to('Follow', unfollow_profile_path(@profile.id), method: :post)
+

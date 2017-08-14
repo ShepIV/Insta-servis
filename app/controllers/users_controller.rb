@@ -10,8 +10,13 @@ class UsersController < ApplicationController
   end
 
   def follow
-    current_user.follow!(@socializable)
-    render json: { follow: true }
+    # puts '123'
+    # @prof = Profile.all
+    # puts @prof
+    # @user = @.find(params[:id])
+    # current_user.follow!(@.id)
+    # current_user.follow!(@  )
+    # render json: { follow: true }
   end
 
   def unfollow

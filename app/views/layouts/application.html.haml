@@ -13,22 +13,31 @@
   %nav.navbar.navbar-toggleable-md.navbar-light.bg-faded
     %button.navbar-toggler.navbar-toggler-right{"aria-controls" => "navbarSupportedContent", "aria-expanded" => "false", "aria-label" => "Toggle navigation", "data-target" => "#navbarSupportedContent", "data-toggle" => "collapse", :type => "button"}
       %span.navbar-toggler-icon
-    %a.navbar-brand{:href => "http://localhost:3000/profiles/#{current_user.profile.id}"} Servis
+    - if current_user
+      = link_to 'SERVIS', profile_path(current_user.profile.id), class: 'navbar-brand h4'
+    - else
+      = link_to 'SERVIS', root_path, class: 'navbar-brand h4'
     #navbarSupportedContent.collapse.navbar-collapse
       %ul.navbar-nav.mr-auto
-        %li.nav-item.active
-          %a.nav-link{:href => "http://localhost:3000/posts"}
-            Posts
+
+        -#%li.nav-item
+          -#= link_to 'Profile', posts_path, class: 'navbar-brand h4'
+          -#%a.nav-link.h4{:href => "http://localhost:3000/profiles"} Profile/posts
+        - if current_user
+          %li.nav-item.active
+            = link_to 'Posts', posts_path, class: 'navbar-brand h4'
             %span.sr-only (current)
-        %li.nav-item
-          %a.nav-link{:href => "http://localhost:3000/profiles/#{}"} Profile/posts
-        %li.nav-item
-          %a.nav-link{:href => "http://localhost:3000/users/sign_in"} login
-        %li.nav-item
-          %a.nav-link{:href => "http://localhost:3000/profiles/#{}"} profile
           %li.nav-item
-          %a.nav-link{:href => "http://localhost:3000/users/sign_up"} sign_up
-      %form.form-inline.my-2.my-lg-0
-        %input.form-control.mr-sm-2{:placeholder => "Search", :type => "text"}/
-        %button.btn.btn-outline-success.my-2.my-sm-0{:type => "submit"} Search
+            = link_to 'Profile', profile_path(current_user.profile.id), class: 'navbar-brand h4'
+
+          -#%li.nav-item
+          -#  = link_to 'Sign out', destroy_user_session_path, class: 'navbar-brand h4'
+        - else
+          %li.nav-item
+            = link_to 'Sign up', new_user_registration_path, class: 'navbar-brand h4'
+            = link_to 'Login', new_user_session_path, class: 'navbar-brand h4'
+
+      -#%form.form-inline.my-2.my-lg-0
+      -#  %input.form-control.mr-sm-2{:placeholder => "Search", :type => "text"}/
+      -#  %button.btn.btn-outline-success.my-2.my-sm-0{:type => "submit"} Search
   = yield

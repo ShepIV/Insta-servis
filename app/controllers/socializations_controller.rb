@@ -15,10 +15,6 @@ class SocializationsController < ApplicationController
   def load_socializable
     @socializable =
         case
-          when id = params[:comment_id] # Must be before :item_id, since it's nested under it.
-            @community.comments.find(id)
-          when id = params[:item_id]
-            @community.items.find(id)
           when id = params[:user_id]
             User.find(id)
           when id = params[:category_id]

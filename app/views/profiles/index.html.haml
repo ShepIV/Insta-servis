@@ -14,14 +14,16 @@
   %tbody
     - @profiles.each do |profile|
       %tr
-        -#%td= image_tag profile.user.post.image
-        %td= image_tag profile.user.avatar
+        %td
+          = image_tag profile.avatar.url, alt: 'Cinque Terre', width: '50', height: '50'
+
         %td= profile.first_name
         %td= profile.second_name
         %td= profile.user_id
         %td= link_to 'Show', profile
         %td= link_to 'Edit', edit_profile_path(profile)
         %td= link_to 'Destroy', profile, :method => :delete, :data => { :confirm => 'Are you sure?' }
+         
 
 %br
 
