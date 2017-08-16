@@ -41,16 +41,16 @@
         -#%i.icon-gift
         -#January 30, 1974
         .span6
-          .follow
-            - if current_user != @profile.user
-              -#= user.toggle_follow!(@profile.user)
+
+          - if current_user != @profile.user
+            .follow-unfollow
               - if current_user.follows?(@profile.user)
-                = link_to('Unfollow', unfollow_profile_path(@profile.user.id), method: :post, remote: true)
+                = link_to('Unfollow', unfollow_profile_path(@profile), method: :post, remote: true)
               - else
-                = link_to('Follow', follow_profile_path(@profile.user.id), method: :post, remote: true)
-              -#= render "profiles/links/links"
-            - else
-              = link_to('All users', profiles_path)
+                = link_to('Follow', follow_profile_path(@profile), method: :post, remote: true)
+            -#= render "profiles/links/links"
+          - else
+            = link_to('All users', profiles_path)
             -#.checkbox
             -#  %label
             -#    %input{"data-toggle" => "toggle", :type => "checkbox"}/

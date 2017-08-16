@@ -27,4 +27,6 @@ $(document).ready ->
   ), 3000
   return
 
-  
+$ ->
+  $("a[#follow]").on "ajax:success", (e, data, status, xhr) ->
+  alert "The article was deleted."

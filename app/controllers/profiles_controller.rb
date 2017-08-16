@@ -1,5 +1,5 @@
 class ProfilesController < ApplicationController
-  before_action :set_profile, only: [:show, :edit, :update, :destroy]
+  before_action :set_profile, only: [:show, :edit, :update, :destroy, :follow, :unfollow]
   # respond_to :html, :js
 
   # GET /profiles
@@ -68,35 +68,15 @@ class ProfilesController < ApplicationController
     end
   end
 
-  # def follow
-  #   user = User.find(params[:id])
-  #   current_user.toggle_follow!(user) # => This assumes you have a variable current_user who is authenticated
-  # end
-
   def follow
-    user = User.find(params[:id])
-    respond_to do |format|
-      format.html
-      format.js
-      end
-    current_user.follow!(user) # => This assumes you have a variable current_user who is authenticated
-
+    current_user.follow!(@profile.user) # => This assumes you have a variable current_user who is authenticated
+    render :follow_button
   end
 
   def unfollow
-    user = User.find(params[:id])
-    respond_to do |format|
-      format.html
-      format.js
-      end
-    current_user.unfollow!(user)
+    current_user.unfollow!(@profile.user)
+    render :follow_button
   end
-
-    # def unfollow
-    #   user = User.find(params[:id])
-    #   current_user.stop_following(user)
-    # end
-
 
   private
 

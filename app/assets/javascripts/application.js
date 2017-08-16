@@ -18,4 +18,3 @@
 
 //= require profiles
 ///= require switchery
-//= requre button
