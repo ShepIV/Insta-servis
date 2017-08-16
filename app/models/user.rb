@@ -19,6 +19,7 @@ class User < ApplicationRecord
 
   acts_as_followable
   acts_as_follower
+  acts_as_liker
 
   #attr_accessible :image, :image_cash, :remote_image
   #has_attached_file :avatar, :styles => { :thumb => "75x75>", :small => "150x150>" }

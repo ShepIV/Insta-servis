@@ -64,6 +64,23 @@ class PostsController < ApplicationController
     end
   end
 
+
+  def likes
+    @user = current_user # before_action :authenticate_user, only: [:likes]
+    @post = Post.find(params[:id])
+    @current_user.like!(@post)
+    render :like_button
+    # redirect_to :back, notice: "Liked this post successfully!"
+  end
+
+  def unlikes
+    @user = current_user # before_action :authenticate_user, only: [:likes]
+    @post = Post.find(params[:id])
+    @current_user.unlike!(@post)
+    render :like_button
+    # redirect_to :back, notice: "Unliked this post successfully!"
+  end
+
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_post

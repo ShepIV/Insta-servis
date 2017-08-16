@@ -15,11 +15,11 @@
       %tr
         %td= post.name
         %td= post.description
-        %td= post.image
+        %td= image_tag post.image.thumb
         %td= link_to 'Show', post
         %td= link_to 'Edit', edit_post_path(post)
         %td= link_to 'Destroy', post, :method => :delete, :data => { :confirm => 'Are you sure?' }
 
 %br
-
+-#- if current_user = profile.user
 = link_to 'New Post', new_post_path

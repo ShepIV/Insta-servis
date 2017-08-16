@@ -2,7 +2,7 @@
 %script{:src => "//cdnjs.cloudflare.com/ajax/libs/jquery/2.0.1/jquery.min.js"}
 %link{:href => "dist/switchery.css", :rel => "stylesheet"}/
 %script{:src => "dist/switchery.js"}
-%javascript_include_tag :defaults
+-#%javascript_include_tag :defaults
 
 
 .form-group
@@ -57,14 +57,15 @@
             -#    following
       %ul.inline.user-counts-list
         %li
-          Photos #{current_user.posts.count}
-          %span.users.posts.count
+          Photos
+          %span #{@profile.user.posts.count}
         %li
           Followers
-          %span.count
+          -#%span #{@profile.user.follows.count}
         %li
           Following
-          %span.count
+          %span
+            -##{@profile.user.followers}
         - if user_signed_in?
           %span
           %p
@@ -83,9 +84,9 @@
           %span чужой аккаунт
           -#- if @user.follow?(current_user)
 
-      %p#notice= notice
-      %p.text-center.notice= notice
-      %p.text-center.alert= alert
+      -#%p#notice= notice
+      -#%p.text-center.notice= notice
+      -#%p.text-center.alert= alert
 
 
 
@@ -159,10 +160,6 @@
 
   #references.tab-pane.fade{:role => "tabpanel"}
     - Post.where(user_id: @profile.user.followees(User).pluck(:id)).each do |post|
-      -#- Post.where(user_id: @profile.user.followees(User).pluck(:first_name)).each do |user|
-      -#- User.where(user_id: @profile.user.followees(User).pluck(:id)).each do |user|
-      -#- if current_user.follows?(@profile.user)
-      -#%p= user.first_name
       %p= post.user_id
       %p= post.name
       %p= post.description

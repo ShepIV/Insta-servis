@@ -5,7 +5,12 @@ Rails.application.routes.draw do
   resources :profiles do
     resources :avatars
   end
-  resources :posts
+  resources :posts do
+    member do
+      post :likes
+      post :unlikes
+    end
+  end
 
   resources :profiles do
     member do
@@ -15,7 +20,7 @@ Rails.application.routes.draw do
     end
   end
  #root 'posts#profile'
-  root 'users#profile'
+  root 'profiles#index'
   #root 'profiles'
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
 
