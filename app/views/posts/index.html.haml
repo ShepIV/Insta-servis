@@ -1,26 +1,25 @@
 %h1.text-center Listing posts
 
-%table
+%table{align: 'center', cellpadding: '20px'}
   %thead
     %tr
+      %th.text-center Image
       %th.text-center Name
       %th.text-center Description
-      %th.text-center Image
       %th
       %th
       %th
 
   %tbody
+
     - @posts.each do |post|
       %tr
+        %td= image_tag post.image.thumb
         %td= post.name
         %td= post.description
-        %td= image_tag post.image.thumb
-        %td= post.user_id
         %td= link_to 'Show', post
-        -#- if @posts.user_id = current_user.id
-        %td= link_to 'Edit', edit_post_path(post)
-        %td= link_to 'Destroy', post, :method => :delete, :data => { :confirm => 'Are you sure?' }
+        -#%td= link_to 'Edit', edit_post_path(post)
+        -#%td= link_to 'Destroy', post, :method => :delete, :data => { :confirm => 'Are you sure?' }
 
 
 %br

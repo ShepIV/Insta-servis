@@ -33,9 +33,10 @@
           -#%li.nav-item
           -#  = link_to 'Sign out', destroy_user_session_path, class: 'navbar-brand h4'
         - else
-          %li.nav-item
-            = link_to 'Sign up', new_user_registration_path, class: 'navbar-brand h4'
-            = link_to 'Login', new_user_session_path, class: 'navbar-brand h4'
+          %ul.nav.navbar-nav.navbar-right
+            %li= link_to 'Sign up', new_user_registration_path, class: 'navbar-brand h4'
+
+            %li= link_to 'Login', new_user_session_path, class: 'navbar-brand h4'
 
       -#%form.form-inline.my-2.my-lg-0
       -#  %input.form-control.mr-sm-2{:placeholder => "Search", :type => "text"}/

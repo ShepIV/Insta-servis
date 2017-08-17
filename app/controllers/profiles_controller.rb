@@ -1,4 +1,5 @@
 class ProfilesController < ApplicationController
+  # before_action :authenticate_user!
   before_action :set_profile, only: [:show, :edit, :update, :destroy, :follow, :unfollow]
   # respond_to :html, :js
 
@@ -6,6 +7,10 @@ class ProfilesController < ApplicationController
   # GET /profiles.json
   def index
     @profiles = Profile.all
+    # if user_signed_in?
+    #   render
+    # else
+    #   render "index"
   end
 
   # GET /profiles/1

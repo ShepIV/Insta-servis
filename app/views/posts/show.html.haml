@@ -12,6 +12,9 @@
 %p
   %b Description:
   = @post.description
+- if current_user.id == @post.user.id
+  %td= link_to 'Destroy', @post, :method => :delete, :data => { :confirm => 'Are you sure?' }
+
 .like_button
   - if current_user.likes?(@post)
     = link_to('Unlike', unlikes_post_path(@post), method: :post, remote: true)
@@ -40,6 +43,9 @@
   %p
     = f.submit
 
-= link_to 'Edit', edit_post_path(@post)
-\|
-= link_to 'Back', profile_path(current_user.profile.id)
+- if current_user.id == @post.user.id
+  = link_to 'Edit', edit_post_path(@post)
+  \|
+  = link_to 'Back', profile_path(current_user.profile.id)
+- else
+  = link_to 'Back', profile_path(current_user.profile.id)

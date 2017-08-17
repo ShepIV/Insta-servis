@@ -28,7 +28,7 @@
       %blockquote
         %small
           %cite{:title => "Source Title"}
-            - if current_user.confirmed?
+            - if @profile.user.confirmed?
               %span (подтвержден)
             - else
               %span (не подтвержден)
@@ -63,11 +63,13 @@
             %span #{@profile.user.posts.count}
           %li
             Followers
-            -#%span #{@profile.user.follows.count}
+            %span
+          -#{@profile.user.followers.select{|f| f.profile.user }.count}
+          -#%span #{@profile.user.follows.count}
           %li
             Following
             %span
-              -##{@profile.user.followers}
+          -##{@profile.user.followers}
     .col-xs-2
       %blockquote
         - if user_signed_in?
@@ -111,7 +113,8 @@
         %b profile_User`s:
         = @profile.user_id
   #buzz.tab-pane.fade{:role => "tabpanel"}
-    = link_to 'New photo', new_post_path
+    - if current_user.profile.id == @profile.id
+      = link_to 'New photo', new_post_path
     .feed-photos
       .row-fluid
         .span12
