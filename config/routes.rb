@@ -6,6 +6,7 @@ Rails.application.routes.draw do
     resources :avatars
   end
   resources :posts do
+    resources :comments
     member do
       post :likes
       post :unlikes

@@ -19,10 +19,7 @@ class UsersController < ApplicationController
     # render json: { follow: true }
   end
 
-  def unfollow
-    current_user.unfollow!(@socializable)
-    render json: { follow: false }
-  end
+
 
 
 

@@ -16,9 +16,12 @@
         %td= post.name
         %td= post.description
         %td= image_tag post.image.thumb
+        %td= post.user_id
         %td= link_to 'Show', post
+        -#- if @posts.user_id = current_user.id
         %td= link_to 'Edit', edit_post_path(post)
         %td= link_to 'Destroy', post, :method => :delete, :data => { :confirm => 'Are you sure?' }
+
 
 %br
 -#- if current_user = profile.user
