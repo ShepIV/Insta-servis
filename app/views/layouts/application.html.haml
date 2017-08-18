@@ -3,20 +3,20 @@
   %head
 
     %meta{:content => "text/html; charset=UTF-8", "http-equiv" => "Content-Type"}/
-    %title Servis
+    %title Insta-clone
     = csrf_meta_tags
     = stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track': 'reload'
     = javascript_include_tag 'application', 'data-turbolinks-track': 'reload'
 
 
-%body.header-bg
+%body.container
   %nav.navbar.navbar-toggleable-md.navbar-light.bg-faded
-    %button.navbar-toggler.navbar-toggler-right{"aria-controls" => "navbarSupportedContent", "aria-expanded" => "false", "aria-label" => "Toggle navigation", "data-target" => "#navbarSupportedContent", "data-toggle" => "collapse", :type => "button"}
+    %button.navbar-toggler{"aria-controls" => "navbarSupportedContent", "aria-expanded" => "false", "aria-label" => "Toggle navigation", "data-target" => "#navbarSupportedContent", "data-toggle" => "collapse", :type => "button"}
       %span.navbar-toggler-icon
     - if current_user
-      = link_to 'SERVIS', profile_path(current_user.profile.id), class: 'navbar-brand h4'
+      = link_to 'INSTA-CLONE', profile_path(current_user.profile.id), class: 'navbar-brand h4'
     - else
-      = link_to 'SERVIS', root_path, class: 'navbar-brand h4'
+      = link_to 'INSTA-CLONE', root_path, class: 'navbar-brand h4'
     #navbarSupportedContent.collapse.navbar-collapse
       %ul.navbar-nav.mr-auto
 
@@ -29,11 +29,12 @@
             %span.sr-only (current)
           %li.nav-item
             = link_to 'Profile', profile_path(current_user.profile.id), class: 'navbar-brand h4'
-
+          %li.nav-item.pull-xs-right
+            = link_to 'Выйти', destroy_user_session_path, :method => :delete, class: 'navbar-brand h4'
           -#%li.nav-item
           -#  = link_to 'Sign out', destroy_user_session_path, class: 'navbar-brand h4'
         - else
-          %ul.nav.navbar-nav.navbar-right
+          %ul.nav.navbar-nav.mr-auto.navbar-toggler-right
             %li= link_to 'Sign up', new_user_registration_path, class: 'navbar-brand h4'
 
             %li= link_to 'Login', new_user_session_path, class: 'navbar-brand h4'
@@ -42,3 +43,4 @@
       -#  %input.form-control.mr-sm-2{:placeholder => "Search", :type => "text"}/
       -#  %button.btn.btn-outline-success.my-2.my-sm-0{:type => "submit"} Search
   = yield
+

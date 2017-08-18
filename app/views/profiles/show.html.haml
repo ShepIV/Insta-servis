@@ -16,15 +16,45 @@
   .row
     .col-xs-2
       %img.img-circle{:alt => "Cinque Terre", :width => "350", :height => "350", :src => "#{@profile.avatar.url}"}/
-    .col-xs-2
-      %blockquote
-        %p #{@profile.first_name} #{@profile.second_name}
-        - if current_user && current_user.profile == @profile
-          %span
-          = link_to 'Edit', edit_profile_path(@profile)
-        - else
-          %span чужой аккаунт
     .col-xs-3
+      %p.h2 #{@profile.first_name} #{@profile.second_name}
+      - if current_user && current_user.profile == @profile
+        %span
+        = link_to 'Edit', edit_profile_path(@profile)
+      - else
+        %span чужой аккаунт
+
+    .col-xs-2
+      %ul.inline.user-counts-list
+        %li
+          Photos
+          %span #{@profile.user.posts.count}
+        %li
+          = link_to ("Followers #{@profile.user.followers(User).count}")
+          %span
+        %li
+          Following #{@profile.user.followees(User).count}
+          %span
+  -##{@profile.user.followers}
+  - if current_user.profile.id == @profile.id
+    = link_to 'New photo', new_post_path
+  .feed-photos
+    .row-fluid
+      .span12
+        - @profile.user.posts.each_slice(3) do |posts|
+          %ul.thumbnails.user-media-thumbnails
+            - posts.each do |post|
+              %li.span4
+                %a.thumbnail{:href => post_path(post.id)}
+                  %img{:src => post.image}/
+                  .meta
+                    %i.icon-heart
+                    3
+                    %i.icon-comment
+                    0
+
+
+    .col-xs-4
       %blockquote
         %small
           %cite{:title => "Source Title"}
@@ -55,21 +85,7 @@
             -#= render "profiles/links/links"
           - else
             = link_to('All users', profiles_path)
-    .col-xs-2
-      %blockquote
-        %ul.inline.user-counts-list
-          %li
-            Photos
-            %span #{@profile.user.posts.count}
-          %li
-            Followers
-            %span
-          -#{@profile.user.followers.select{|f| f.profile.user }.count}
-          -#%span #{@profile.user.follows.count}
-          %li
-            Following
-            %span
-          -##{@profile.user.followers}
+
     .col-xs-2
       %blockquote
         - if user_signed_in?
@@ -80,6 +96,7 @@
         - else
           = link_to 'Войти', new_user_session_path
           или #{link_to 'Зарегистрироваться', new_user_registration_path}
+
 
 
 
@@ -118,7 +135,7 @@
     .feed-photos
       .row-fluid
         .span12
-          - @profile.user.posts.each_slice(6) do |posts|
+          - @profile.user.posts.each_slice(3) do |posts|
             %ul.thumbnails.user-media-thumbnails
               - posts.each do |post|
                 %li.span2
@@ -139,7 +156,7 @@
             %h4.card-title= post.name
             %p.card-text= post.description
             %p= post.created_at
-            %p= post.user_id
+            %p= post.user.profile.first_name
             %a.btn.btn-primary{href: post_path(post.id)} Show
 
 

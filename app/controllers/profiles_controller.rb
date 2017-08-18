@@ -83,6 +83,10 @@ class ProfilesController < ApplicationController
     render :follow_button
   end
 
+  def followers
+    render :followers_show
+  end
+
   private
 
   # Use callbacks to share common setup or constraints between actions.

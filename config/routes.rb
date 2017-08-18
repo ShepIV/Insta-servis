@@ -2,9 +2,9 @@ Rails.application.routes.draw do
   #resources :avatars
   devise_for :users
 
-  resources :profiles do
-    resources :avatars
-  end
+  # resources :profiles do
+  #   resources :avatars
+  # end
   resources :posts do
     resources :comments
     member do
@@ -14,6 +14,7 @@ Rails.application.routes.draw do
   end
 
   resources :profiles do
+    resources :avatars
     member do
       post :follow
       post :unfollow

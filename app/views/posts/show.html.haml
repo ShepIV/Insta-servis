@@ -28,7 +28,8 @@
 - @post.comments.each do |comment|
   %p
     %strong Commenter:
-    = comment.user_id
+    = comment.post.user.profile.first_name
+    = comment.post.user.profile.second_name
   %p
     %strong Comment:
     = comment.text

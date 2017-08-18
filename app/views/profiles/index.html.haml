@@ -6,7 +6,6 @@
       %th Avatar
       %th First name
       %th Second name
-      %th User_id
       %th
       %th
       %th
@@ -18,7 +17,6 @@
 
         %td.h2= profile.first_name
         %td.h2= profile.second_name
-        %td.h2= profile.user_id
         %td.h2= link_to 'Show', profile
         -#%td= link_to 'Edit', edit_profile_path(profile)
         -#%td= link_to 'Destroy', profile, :method => :delete, :data => { :confirm => 'Are you sure?' }

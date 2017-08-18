@@ -1,3 +1,4 @@
+
 %h3.text-center.login-title Users#profile
 %p.text-center.notice= notice
 %p.text-center.alert= alert
@@ -32,17 +33,19 @@
           %li= msg
 
 
-  .field
+  .field.text-center
     = f.label :first_name
     = f.text_field :first_name
-  .field
+  .field.text-center
     = f.label :second_name
     = f.text_field :second_name
-  .field
-    = f.label :user_id
-    = f.text_field :user_id
-  .field
+
+  .field.text-center
     = f.label :avatar
     = f.file_field :avatar
-  .actions
+
+  -#.field.text-center
+  -#  = f.label :email
+  -#  = f.text_field :email
+  .actions.text-center
     = f.submit 'Save'
