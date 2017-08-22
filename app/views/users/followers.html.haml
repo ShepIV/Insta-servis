@@ -1,0 +1,19 @@
+%h3.text-center Followers from #{@user.first_name} #{@user.second_name}
+.container
+  - if @user.followers(User).count == 0
+    %h3 Фолловеров нет
+  - else
+    %table{align: 'center', cellpadding: '20px'}
+      %thead
+        %tr
+          %th Avatar
+          %th First name
+          %th Second name
+      %tbody
+        - @user.followers(User).each do |follow|
+          %tr
+            %td= image_tag follow.avatar.url, width: '150', height: '150'
+            %td.h2= follow.first_name
+            %td.h2= follow.second_name
+            %td.h2= link_to 'Show', follow
+

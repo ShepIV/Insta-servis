@@ -11,10 +11,9 @@
       %th
 
   %tbody
-    - @profiles.each do |profile|
+    - @users.each do |profile|
       %tr
-        %td= image_tag profile.avatar.url, alt: 'Cinque Terre', width: '150', height: '150'
-
+        %td= image_tag profile.avatar.url, width: '150', height: '150'
         %td.h2= profile.first_name
         %td.h2= profile.second_name
         %td.h2= link_to 'Show', profile

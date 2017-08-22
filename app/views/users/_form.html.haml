@@ -1,7 +1,7 @@
 
-%h3.text-center.login-title Users#profile
-%p.text-center.notice= notice
-%p.text-center.alert= alert
+-#%h3.text-center.login-title Users#profile
+-#%p.text-center.notice= notice
+-#%p.text-center.alert= alert
 
 - if !flash[:notice].blank?
   .alert.alert-info
@@ -24,12 +24,12 @@
     = link_to 'Войти', new_user_session_path
     или #{link_to 'Зарегистрироваться', new_user_registration_path}
 
-= form_for @profile do |f|
-  - if @profile.errors.any?
+= form_for @user do |f|
+  - if @user.errors.any?
     #error_explanation
-      %h2= "#{pluralize(@profile.errors.count, "error")} prohibited this profile from being saved:"
+      %h2= "#{pluralize(@user.errors.count, "error")} prohibited this profile from being saved:"
       %ul
-        - @profile.errors.full_messages.each do |msg|
+        - @user.errors.full_messages.each do |msg|
           %li= msg
 
 

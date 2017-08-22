@@ -1,11 +1,12 @@
 class PostsController < ApplicationController
-  before_action :set_post, only: [:show, :edit, :update, :destroy]
+  before_action :authenticate_user!
+  before_action :set_post, only: [:show, :edit, :update, :destroy, :likes, :unlikes]
 
   # GET /posts
   # GET /posts.json
   def index
     @posts = Post.all
-    @user = current_user
+    @user = current_user.posts
     #@comment = Comment.all
   end
 
@@ -65,19 +66,14 @@ class PostsController < ApplicationController
     end
   end
 
-
   def likes
-    @user = current_user # before_action :authenticate_user, only: [:likes]
-    @post = Post.find(params[:id])
-    @current_user.like!(@post)
+    current_user.like!(@post)
     render :like_button
     # redirect_to :back, notice: "Liked this post successfully!"
   end
 
   def unlikes
-    @user = current_user # before_action :authenticate_user, only: [:likes]
-    @post = Post.find(params[:id])
-    @current_user.unlike!(@post)
+    current_user.unlike!(@post)
     render :like_button
     # redirect_to :back, notice: "Unliked this post successfully!"
   end

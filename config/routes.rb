@@ -1,28 +1,36 @@
 Rails.application.routes.draw do
-  #resources :avatars
+
   devise_for :users
 
-  # resources :profiles do
-  #   resources :avatars
-  # end
   resources :posts do
-    resources :comments
+    resources :comments, except: [:index, :show]
     member do
       post :likes
       post :unlikes
     end
   end
 
-  resources :profiles do
-    resources :avatars
+  resources :users, except: [:destroy, :create] do
     member do
       post :follow
       post :unfollow
-      post :toggle_follow
+      get :followers
+      get :followees
+      get :news
+      post :likes
+      post :unlikes
     end
   end
+  resources :profiles do
+    member do
+      post :follow
+      post :unfollow
+    end
+  end
+  # post 'users#followers'
  #root 'posts#profile'
-  root 'profiles#index'
+  # root 'user', to: 'users#show'
+   root 'index#home'
   #root 'profiles'
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
 

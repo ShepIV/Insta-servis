@@ -7,40 +7,39 @@
     = csrf_meta_tags
     = stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track': 'reload'
     = javascript_include_tag 'application', 'data-turbolinks-track': 'reload'
+    %link{:href => "//netdna.bootstrapcdn.com/twitter-bootstrap/2.3.2/css/bootstrap-combined.min.css", :rel => "stylesheet"}
+    %link{:href => "https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css", :rel => "stylesheet"}
+    %script{:src => "//cdnjs.cloudflare.com/ajax/libs/jquery/2.0.1/jquery.min.js"}
 
 
-%body.container
+
+%body
   %nav.navbar.navbar-toggleable-md.navbar-light.bg-faded
     %button.navbar-toggler{"aria-controls" => "navbarSupportedContent", "aria-expanded" => "false", "aria-label" => "Toggle navigation", "data-target" => "#navbarSupportedContent", "data-toggle" => "collapse", :type => "button"}
       %span.navbar-toggler-icon
     - if current_user
-      = link_to 'INSTA-CLONE', profile_path(current_user.profile.id), class: 'navbar-brand h4'
+      = link_to 'INSTA-CLONE', user_path(current_user.id), class: 'navbar-brand h4'
     - else
       = link_to 'INSTA-CLONE', root_path, class: 'navbar-brand h4'
     #navbarSupportedContent.collapse.navbar-collapse
-      %ul.navbar-nav.mr-auto
-
-        -#%li.nav-item
-          -#= link_to 'Profile', posts_path, class: 'navbar-brand h4'
-          -#%a.nav-link.h4{:href => "http://localhost:3000/profiles"} Profile/posts
+      %ul.navbar-nav
         - if current_user
-          %li.nav-item.active
-            = link_to 'Posts', posts_path, class: 'navbar-brand h4'
-            %span.sr-only (current)
           %li.nav-item
-            = link_to 'Profile', profile_path(current_user.profile.id), class: 'navbar-brand h4'
-          %li.nav-item.pull-xs-right
-            = link_to 'Выйти', destroy_user_session_path, :method => :delete, class: 'navbar-brand h4'
-          -#%li.nav-item
-          -#  = link_to 'Sign out', destroy_user_session_path, class: 'navbar-brand h4'
+            = link_to '<i class="glyphicon glyphicon-th-list"></i>'.html_safe, news_user_path(current_user), class: 'navbar-brand h4'
+          %li.nav-item
+            = link_to  user_path(current_user.id), class: 'navbar-brand h4' do
+              %i.glyphicon.glyphicon-user
+          %li.nav-item.navbar-toggler-right
+            = link_to '<i class="glyphicon glyphicon-remove"></i>'.html_safe, destroy_user_session_path, :method => :delete, class: 'navbar-brand exit h4'
         - else
-          %ul.nav.navbar-nav.mr-auto.navbar-toggler-right
-            %li= link_to 'Sign up', new_user_registration_path, class: 'navbar-brand h4'
+          %li.nav-item.navbar-toggler-right
+            %li= link_to '<i class="glyphicon glyphicon-plus-sign"></i>'.html_safe, new_user_registration_path, class: 'navbar-brand h4'
+          %li.nav-item.navbar-toggler-right
+            %li= link_to '<i class="glyphicon glyphicon-ok"></i>'.html_safe, new_user_session_path, class: 'navbar-brand h4'
 
-            %li= link_to 'Login', new_user_session_path, class: 'navbar-brand h4'
-
-      -#%form.form-inline.my-2.my-lg-0
-      -#  %input.form-control.mr-sm-2{:placeholder => "Search", :type => "text"}/
-      -#  %button.btn.btn-outline-success.my-2.my-sm-0{:type => "submit"} Search
+  - if current_user && !current_user.confirmed_at.present?
+    .right-card
+      .card-danger{class: 'card w-25'}
+        Please, confirm your account
   = yield
 

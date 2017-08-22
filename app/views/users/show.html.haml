@@ -1,10 +1,175 @@
-#paintings
-  - @posts.image.each do |post|
-    .painting
-      = image_tag post.image
-      .name= user.name
-      .actions
-        = link_to "edit", edit_user_path(image)
-        |
-        \#{link_to "remove", painting, :confirm => 'Are you sure?', :method => :delete}
-  .clear
+.form-group
+  - if !flash[:notice].blank?
+    .alert.alert-info
+      = flash[:notice]
+
+    /TODO notification
+
+.container
+  .row.header-menu
+    .col-xs-2
+      %img.img-circle{:alt => "Cinque Terre", :width => "350", :height => "350", :src => "#{@user.avatar.url}"}/
+
+    .col-xs-10
+      .panel
+        %p.h2{style: 'display: inline-block'} #{@user.first_name} #{@user.second_name}
+        - if current_user == @user
+          %span{style: 'padding-left: 50px; padding-bottom: 15px'}
+          = link_to 'Редактировать профиль', edit_user_path(@user), class: 'btn btn-secondary'
+        - else
+          %span.opacity чужой аккаунт
+      .panel2{style: 'display: inline-block'}
+        .col-xs-12{style: 'display: inline-block'}
+          -#%ul{style: 'display: inline-block'}
+          %p.h4{style: 'display: inline-block'}
+            Photos
+            %span #{@user.posts.count}
+          %p.h4{style: 'display: inline-block'}
+            = link_to("Followers #{@user.followers(User).count}", followers_user_path(@user))
+          %p.h4{style: 'display: inline-block'}
+            = link_to("Following #{@user.followees(User).count}", followees_user_path(@user))
+            %span
+        .col-xs-5
+          - if current_user != @user
+            .follow-unfollow
+              - if current_user.follows?(@user)
+                = link_to('Unfollow', unfollow_user_path(@user), method: :post, remote: true)
+              - else
+                = link_to('Follow', follow_user_path(@user), method: :post, remote: true)
+          - else
+            = link_to('All users', users_path)
+
+  - if current_user.id == @user.id
+    = link_to 'New photo', new_post_path
+  .feed-photos
+    .row-fluid
+      .span12
+        - @user.posts.each_slice(3) do |posts|
+          %ul.thumbnails.user-media-thumbnails
+            - if posts.count == 0
+              %h2.text-center Постов нет
+            - else
+              - posts.each do |post|
+                %li.span4
+                  %a.thumbnail{:href => post_path(post.id)}
+                    %img{:src => post.image}/
+                    .meta
+                      %i.icon-heart
+                      3
+                      %i.icon-comment
+                      0
+
+
+    -#.col-xs-4
+    -#  %blockquote
+    -#    %small
+    -#      %cite{:title => "Source Title"}
+    -#        - if @profile.user.confirmed?
+    -#          %span (подтвержден)
+    -#        - else
+    -#          %span (не подтвержден)
+    -#          %i.icon-map-marker
+    -#
+    -#
+    -#    %p
+    -#      %i.icon-envelope
+    -#      #{@profile.user.email}
+    -#      %br/
+    -#      %i.icon-globe
+    -#      %a{:href => "#"} http://localhost:3000/profiles/#{@profile.id}
+    -#      %br/
+    -#      -#%i.icon-gift
+    -#      -#January 30, 1974
+    -#    .span6
+    -#
+    -#      - if current_user != @profile.user
+    -#        .follow-unfollow
+    -#          - if current_user.follows?(@profile.user)
+    -#            = link_to('Unfollow', unfollow_profile_path(@profile), method: :post, remote: true)
+    -#          - else
+    -#            = link_to('Follow', follow_profile_path(@profile), method: :post, remote: true)
+    -#        -#= render "profiles/links/links"
+    -#      - else
+    -#        = link_to('All users', profiles_path)
+    -#
+    -#.col-xs-2
+    -#  %blockquote
+    -#    - if user_signed_in?
+    -#      %span
+    -#      %p
+    -#      = link_to 'Выйти', destroy_user_session_path, :method => :delete
+    -#
+    -#    - else
+    -#      = link_to 'Войти', new_user_session_path
+    -#      или #{link_to 'Зарегистрироваться', new_user_registration_path}
+
+
+
+
+-#%head
+-#  -#%link{:href => "//netdna.bootstrapcdn.com/twitter-bootstrap/2.3.2/css/bootstrap-combined.min.css", :rel => "stylesheet"}/
+-#
+-#
+-#%body
+-#%ul.nav.nav-tabs{:role => "tablist"}
+-#  %li.nav-item
+-#    %a.nav-link.active{"data-toggle" => "tab", :href => "#profile", :role => "tab"} profile
+-#  %li.nav-item
+-#    %a.nav-link{"data-toggle" => "tab", :href => "#buzz", :role => "tab"} posts
+-#  %li.nav-item
+-#    %a.nav-link{"data-toggle" => "tab", :href => "#references", :role => "tab"} news
+-#/ Tab panes
+-#.tab-content
+-#  #profile.tab-pane.fade.in.active{:role => "tabpanel"}
+-#    %p
+-#      -#%a{:href => profile.avatar}
+-#      -#%b Avatar:
+-#      -#-#= @profile.avatar
+-#      -#= image_tag @profile.avatar
+-#      %p
+-#        %b First name:
+-#        = @profile.first_name
+-#      %p
+-#        %b Second name:
+-#        = @profile.second_name
+-#      %p
+-#        %b profile_User`s:
+-#        = @profile.user_id
+-#  #buzz.tab-pane.fade{:role => "tabpanel"}
+-#    - if current_user.profile.id == @profile.id
+-#      = link_to 'New photo', new_post_path
+-#    .feed-photos
+-#      .row-fluid
+-#        .span12
+-#          - @profile.user.posts.each_slice(3) do |posts|
+-#            %ul.thumbnails.user-media-thumbnails
+-#              - posts.each do |post|
+-#                %li.span2
+-#                  %a.thumbnail{:href => post_path(post.id)}
+-#                    %img{:src => post.image}/
+-#                    .meta
+-#                      %i.icon-heart
+-#                      3
+-#                      %i.icon-comment
+-#                      0
+-#
+-#  #references.tab-pane.fade{:role => "tabpanel"}
+-#    - Post.where(user_id: @profile.user.followees(User).pluck(:id)).each do |post|
+-#      .text-center
+-#        .card{:style => "width: 140rem;"}
+-#          %p= image_tag post.image
+-#          .card-block
+-#            %h4.card-title= post.name
+-#            %p.card-text= post.description
+-#            %p= post.created_at
+-#            %p= post.user.profile.first_name
+-#            %a.btn.btn-primary{href: post_path(post.id)} Show
+
+
+
+
+
+
+
+
+
