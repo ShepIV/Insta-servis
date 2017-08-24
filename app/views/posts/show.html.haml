@@ -1,51 +1,52 @@
 %p.text-center#notice= notice
 
-
-.text-center
-  %p
-    = image_tag @post.image
-  %p
-    %b User:
-    = @post.user.first_name
-  %p
-    %b Name:
-    = @post.name
-
-  %p
-    %b Description:
-    = @post.description
-  - if current_user.id == @post.user.id
-    %td= link_to 'Destroy', @post, :method => :delete, :data => { :confirm => 'Are you sure?' }
-
-  .like_button
-    - if current_user.likes?(@post)
-      = link_to('Unlike', unlikes_post_path(@post), method: :post, remote: true)
-    - else
-      = link_to('like', likes_post_path(@post), method: :post, remote: true)
-
-
-  %h2 Comments
-  - @post.comments.each do |comment|
+.card
+  .text-center
     %p
-      %strong Commenter:
-      = comment.post.user.first_name
-      = comment.post.user.second_name
+      = image_tag @post.image
     %p
-      %strong Comment:
-      = comment.text
+      %b User:
+      = @post.user.first_name
+    %p
+      %b Name:
+      = @post.name
+
+    %p
+      %b Description:
+      = @post.description
+    - if current_user.id == @post.user.id
+      %td= link_to 'Destroy', @post, :method => :delete, :data => { :confirm => 'Are you sure?' }
+
+    .like_button
+      - if current_user.likes?(@post)
+        = link_to('Unlike', unlikes_post_path(@post), method: :post, remote: true)
+      - else
+        = link_to('like', likes_post_path(@post), method: :post, remote: true)
+      = @post.likers(User).count
 
 
-  %h5 Add a comment:
-  = form_for([@post, @post.comments.build]) do |f|
-    %p
-      = f.label :text
-      %br/
-      = f.text_area :text
-    %p
-      = f.submit
+      %h2 Comments
+      - @post.comments.each do |comment|
+        %p
+          %strong Commenter:
+          = comment.post.user.first_name
+          = comment.post.user.second_name
+        %p
+          %strong Comment:
+          = comment.text
 
-  - if current_user.id == @post.user.id
-    = link_to 'Edit', edit_post_path(@post)
+
+      %h5 Add a comment:
+      = form_for([@post, @post.comments.build]) do |f|
+        %p
+          = f.label :text
+          %br/
+          = f.text_area :text
+        %p
+          = f.submit
+
+    - if current_user.id == @post.user.id
+      = link_to 'Edit', edit_post_path(@post)
   -#  \|
   -#  = link_to 'Back', user_path(current_user.id)
   -#- else

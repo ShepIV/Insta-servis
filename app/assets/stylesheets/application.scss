@@ -13,6 +13,7 @@
 
  */
 @import "bootstrap";
+//@import 'bootstrap/theme';
 @import "profile2";
 @import "devise";
 @import "profiles";
@@ -21,3 +22,6 @@
 @import "comments";
 @import "home";
 @import "helper";
+@import "news";
+@import "conversations";
+@import 'chosen';

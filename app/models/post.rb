@@ -5,5 +5,5 @@ class Post < ApplicationRecord
     #has_many :likes, #dependent: :destroy
 
     acts_as_likeable
-    acts_as_followable
+    # acts_as_followable
 end

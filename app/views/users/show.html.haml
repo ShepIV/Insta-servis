@@ -14,10 +14,14 @@
       .panel
         %p.h2{style: 'display: inline-block'} #{@user.first_name} #{@user.second_name}
         - if current_user == @user
-          %span{style: 'padding-left: 50px; padding-bottom: 15px'}
+          %span{style: 'padding-left: 50px; padding-bottom: 15px display: inline-block'}
           = link_to 'Редактировать профиль', edit_user_path(@user), class: 'btn btn-secondary'
         - else
           %span.opacity чужой аккаунт
+
+        - if current_user.id == @user.id
+          %span{style: 'padding-left: 50px; padding-bottom: 15px'}
+          = link_to 'New photo', new_post_path, class: 'btn btn-secondary'
       .panel2{style: 'display: inline-block'}
         .col-xs-12{style: 'display: inline-block'}
           -#%ul{style: 'display: inline-block'}
@@ -38,9 +42,6 @@
                 = link_to('Follow', follow_user_path(@user), method: :post, remote: true)
           - else
             = link_to('All users', users_path)
-
-  - if current_user.id == @user.id
-    = link_to 'New photo', new_post_path
   .feed-photos
     .row-fluid
       .span12

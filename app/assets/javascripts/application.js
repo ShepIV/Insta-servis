@@ -17,4 +17,7 @@
 //= require_tree .
 
 //= require profiles
-///= require switchery
+// /= require switchery
+//= require jquery.turbolinks
+//= require chosen-jquery
+//= require messages

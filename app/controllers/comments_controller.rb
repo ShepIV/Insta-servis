@@ -1,9 +1,12 @@
 class CommentsController < ApplicationController
-  before_action :set_comment, only: [:show, :edit, :update, :destroy]
+  before_action :set_comment, only: [:create, :show, :edit, :update, :destroy]
 
   # GET /comments/1/edit
   def edit
-  end
+
+    def show
+
+    end
 
   # POST /comments
   # POST /comments.json
@@ -11,7 +14,6 @@ class CommentsController < ApplicationController
     @post = Post.find(params[:post_id])
     @comment = @post.comments.create(comment_params.merge(user_id: current_user.id))
     redirect_to post_path(@post)
-
   end
 
   # PATCH/PUT /comments/1
@@ -48,4 +50,6 @@ class CommentsController < ApplicationController
     def comment_params
       params.require(:comment).permit(:text, :user_id, :post_id)
     end
+  end
 end
+

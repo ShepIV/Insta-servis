@@ -1,17 +1,33 @@
 %h3.text-center NEWS
-.card
-  - if @user.followees(User).count == 0
+.card{style: 'width: 70rem'}
+  - if current_user.followees(User).count == 0
     %h3.text-center Новостей нет
   - else
     .card
-      - Post.where(user_id: @user.followees(User).pluck(:id)).each do |post|
-        .text-center
-          .card
-            %p= link_to("#{post.user.first_name} #{post.user.second_name}", user_path(post.user))
-            %p= image_tag post.image
-            .card-block
-              %h4.card-title= post.name
-              %p.card-text= post.description
-              %p= post.created_at
-              %p= post.user.first_name
-              %a.btn.btn-primary{href: post_path(post.id)} Show
+      - Post.where(user_id: current_user.followees(User).pluck(:id)).each do |post|
+        %a.text-center.thumbnail{:href => post_path(post.id)}
+          %p= image_tag post.image
+        %p.account-name= link_to("#{post.user.first_name} #{post.user.second_name}", user_path(post.user))
+        .card-block
+          %h4.card-title= post.name
+          %p.card-text= post.description
+          %p.timestamp= post.created_at.to_date
+          %h2 Comments
+          - Comment.where(post_id: post.id).each do |comment|
+            %p
+              %strong Commenter:
+              = comment.post.user.first_name
+              = comment.post.user.second_name
+            %p
+              %strong Comment:
+              = comment.text
+
+          %h5 Add a comment:
+          = form_for([post, post.comments.build]) do |f|
+            %p
+              = f.label :text
+              %br/
+              = f.text_area :text
+            %p
+              = f.submit
+

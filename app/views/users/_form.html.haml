@@ -6,46 +6,28 @@
 - if !flash[:notice].blank?
   .alert.alert-info
     = flash[:notice]
+%body.bg
+  .container
+    .row
+      .main-login.main-center
+        %form.form-horizontal{:action => "#", :method => "post"}
+          = form_for @user do |f|
+            - if @user.errors.any?
+              #error_explanation
+                %h2= "#{pluralize(@user.errors.count, "error")} prohibited this profile from being saved:"
+                %ul
+                  - @user.errors.full_messages.each do |msg|
+                    %li= msg
+            .field.text-center
+              = f.label :first_name
+              = f.text_field :first_name
+            .field.text-center
+              = f.label :second_name
+              = f.text_field :second_name
 
-.row
-  .col-sm-6.col-md-4
-  - if user_signed_in?
-    %span
-      Здравствуйте, #{current_user.email}
-      - if current_user.confirmed?
-        %span (подтвержден)
-      - else
-        %span (не подтвержден)
-    = link_to 'Выйти', destroy_user_session_path, :method => :delete
-    %h2.text_center
-    = link_to 'Listing posts', posts_path
-    %head
-  - else
-    = link_to 'Войти', new_user_session_path
-    или #{link_to 'Зарегистрироваться', new_user_registration_path}
+            .field.text-center.act
+              = f.label :avatar
+              = f.file_field :avatar
 
-= form_for @user do |f|
-  - if @user.errors.any?
-    #error_explanation
-      %h2= "#{pluralize(@user.errors.count, "error")} prohibited this profile from being saved:"
-      %ul
-        - @user.errors.full_messages.each do |msg|
-          %li= msg
-
-
-  .field.text-center
-    = f.label :first_name
-    = f.text_field :first_name
-  .field.text-center
-    = f.label :second_name
-    = f.text_field :second_name
-
-  .field.text-center
-    = f.label :avatar
-    = f.file_field :avatar
-
-  -#.field.text-center
-  -#  = f.label :email
-  -#  = f.text_field :email
-  .actions.text-center
-    = f.submit 'Save'
+            .actions.text-center.act
+              = f.submit 'Save'

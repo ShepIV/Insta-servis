@@ -1,10 +1,15 @@
-%h2 Resend unlock instructions
-= form_for(resource, as: resource_name, url: unlock_path(resource_name), html: { method: :post }) do |f|
-  = devise_error_messages!
-  .field.text-center
-    = f.label :email
-    %br/
-    = f.email_field :email, autofocus: true
-  .actions.text-center
-    = f.submit "Resend unlock instructions"
-    = render "devise/shared/links"
+%body.bg
+  .container
+    %h1.title.text-center Resend unlock instructions
+    .row
+      .main-login.main-center
+        %form.form-horizontal{:action => "#", :method => "post"}
+          = form_for(resource, as: resource_name, url: unlock_path(resource_name), html: { method: :post }) do |f|
+            = devise_error_messages!
+            .field.text-center
+              = f.label :email
+              %br/
+              = f.email_field :email, autofocus: true
+            .actions.text-center
+              = f.submit "Resend unlock instructions"
+              = render "devise/shared/links"

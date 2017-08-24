@@ -27,6 +27,25 @@ Rails.application.routes.draw do
       post :unfollow
     end
   end
+
+  # resources :dialogs do
+  #   resources :messages
+  # end
+
+  resources :conversations, only: [:index, :show, :destroy] do
+    collection do
+      delete :empty_trash
+    end
+  member do
+    post :reply
+    post :mark_as_read
+  end
+  end
+  resources :messages, only: [:new, :create] do
+    member do
+      post :restore
+    end
+  end
   # post 'users#followers'
  #root 'posts#profile'
   # root 'user', to: 'users#show'

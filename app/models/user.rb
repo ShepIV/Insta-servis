@@ -11,7 +11,7 @@ class User < ApplicationRecord
 
 
   mount_uploader :avatar, AvatarUploader
-  has_many :posts
+  has_many :posts, dependent: :destroy
   has_many :comments
   #validates :name, presence: true
 
@@ -19,6 +19,8 @@ class User < ApplicationRecord
   acts_as_followable
   acts_as_follower
   acts_as_liker
+
+  acts_as_messageable
 
   def is_confirmed?
 

@@ -2,3 +2,4 @@
   = link_to('Unlike', unlikes_post_path(post), method: :post, remote: true)
 - else
   = link_to('like', likes_post_path(post), method: :post, remote: true)
+= @post.likers(User).count
