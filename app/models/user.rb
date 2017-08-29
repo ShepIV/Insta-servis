@@ -22,8 +22,14 @@ class User < ApplicationRecord
 
   acts_as_messageable
 
-  def is_confirmed?
 
+
+  def mailboxer_name
+    self.first_name
+  end
+
+  def mailboxer_email(object)
+    self.email
   end
 
   #attr_accessible :image, :image_cash, :remote_image

@@ -8,9 +8,11 @@ module ApplicationHelper
     case level
       when 'notice' then "alert alert-dismissable alert-info"
       when 'success' then "alert alert-dismissable alert-success"
-      when 'error' then "alert alert-dismissable alert-danger"
-      when 'alert' then "alert alert-dismissable alert-danger"
+      when 'error', 'alert' then "alert alert-dismissable alert-danger"
     end
   end
 
+  def active_page(active_page)
+    @active == active_page ? "active" : ""
+  end
 end

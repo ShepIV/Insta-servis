@@ -30,8 +30,11 @@
             = link_to  user_path(current_user.id), class: 'navbar-brand h4' do
               %i.glyphicon.glyphicon-user
           %li.nav-item
-            = link_to  conversations_path, class: 'navbar-brand h4' do
+            = link_to  mailbox_inbox_path, class: 'navbar-brand h4' do
               %i.glyphicon.glyphicon-comment
+          %li.nav-item
+            = link_to users_path, class: 'navbar-brand h4' do
+              %i.glyphicon.glyphicon-search
           %li.nav-item.navbar-toggler-right
             = link_to '<i class="glyphicon glyphicon-remove"></i>'.html_safe, destroy_user_session_path, :method => :delete, class: 'navbar-brand exit h4'
         - else
@@ -45,10 +48,10 @@
       .card-danger{class: 'card w-25'}
         Please, confirm your account
 
-  .container
-    - flash.each do |key, value|
-      %div{ class: "alert alert-#{key}" }
-        = value
+  -#.container
+  - flash.each do |key, value|
+    %div{ class: "alert alert-#{key}" }
+      = value
 
   .page-header
     %h1= yield :page_header

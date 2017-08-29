@@ -1,9 +1,11 @@
 Rails.application.routes.draw do
-
+  root 'index#home'
   devise_for :users
 
+
+
   resources :posts do
-    resources :comments, except: [:index, :show]
+    resources :comments, except: [:index]
     member do
       post :likes
       post :unlikes
@@ -11,6 +13,7 @@ Rails.application.routes.draw do
   end
 
   resources :users, except: [:destroy, :create] do
+    # resources :avatars
     member do
       post :follow
       post :unfollow
@@ -21,35 +24,48 @@ Rails.application.routes.draw do
       post :unlikes
     end
   end
-  resources :profiles do
+
+  get "mailbox/inbox" => "mailbox#inbox", as: :mailbox_inbox
+  get "mailbox/sent" => "mailbox#sent", as: :mailbox_sent
+  get "mailbox/trash" => "mailbox#trash", as: :mailbox_trash
+  # resources :mailbox, only: [:inbox, :sent, :trash]
+
+  resources :conversations do
     member do
-      post :follow
-      post :unfollow
+      post :reply
+      post :trash
+      post :untrash
     end
   end
+  # resources :profiles do
+  #   member do
+  #     post :follow
+  #     post :unfollow
+  #   end
+  # end
 
   # resources :dialogs do
   #   resources :messages
   # end
 
-  resources :conversations, only: [:index, :show, :destroy] do
-    collection do
-      delete :empty_trash
-    end
-  member do
-    post :reply
-    post :mark_as_read
-  end
-  end
-  resources :messages, only: [:new, :create] do
-    member do
-      post :restore
-    end
-  end
+  # resources :conversations, only: [:index, :show, :destroy] do
+  #   collection do
+  #     delete :empty_trash
+  #   end
+  # member do
+  #   post :reply
+  #   post :mark_as_read
+  # end
+  # end
+  # resources :messages, only: [:new, :create] do
+  #   member do
+  #     post :restore
+  #   end
+  # end
   # post 'users#followers'
  #root 'posts#profile'
   # root 'user', to: 'users#show'
-   root 'index#home'
+
   #root 'profiles'
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
 

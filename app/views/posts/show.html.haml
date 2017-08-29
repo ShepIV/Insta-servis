@@ -1,15 +1,11 @@
 %p.text-center#notice= notice
-
-.card
-  .text-center
-    %p
+.container
+  .card{style: 'width: 70rem'}
+    %p.text-center
       = image_tag @post.image
     %p
-      %b User:
-      = @post.user.first_name
-    %p
-      %b Name:
-      = @post.name
+      %img.img-circle{alt: 'Cinque Terre', width: '50', height: '50', src: "#{@post.user.avatar.url}"}
+      %b.account-name= link_to "#{@post.user.first_name}", (user_path(@post.user))
 
     %p
       %b Description:
@@ -17,37 +13,49 @@
     - if current_user.id == @post.user.id
       %td= link_to 'Destroy', @post, :method => :delete, :data => { :confirm => 'Are you sure?' }
 
+    -#= render partial: 'posts/like_button', locals: { post: @post }
     .like_button
       - if current_user.likes?(@post)
-        = link_to('Unlike', unlikes_post_path(@post), method: :post, remote: true)
+        = link_to unlikes_post_path(@post), method: :post, remote: true do
+          %i.glyphicon.glyphicon-star
       - else
-        = link_to('like', likes_post_path(@post), method: :post, remote: true)
+        = link_to likes_post_path(@post), method: :post, remote: true do
+          %i.glyphicon.glyphicon-star-empty
       = @post.likers(User).count
 
+    %p.timestamp #{@post.created_at.strftime('%-d %B %Y, %H:%M:%S')}
 
-      %h2 Comments
-      - @post.comments.each do |comment|
-        %p
-          %strong Commenter:
-          = comment.post.user.first_name
-          = comment.post.user.second_name
-        %p
-          %strong Comment:
-          = comment.text
+    .row
+      .col-sm-12
+        %h2 Users Comment
+        - @post.comments.each do |comment|
+          .row
+            .col-sm-2
+              %img= image_tag comment.user.avatar.url
+            .col-sm-5
+              .panel.panel-default
+                .panel-heading
+                  %strong= link_to("#{comment.user.first_name} #{comment.user.second_name}", user_path(comment.user))
+                  %span.text-muted #{comment.created_at.to_date}
+                .panel-body
+                  = comment.text
+
+    -#- @post.comments.each do |comment|
+    -#  %p
+    -#    %strong Commenter:
+    -#    = comment.post.user.first_name
+    -#    = comment.post.user.second_name
+    -#  %p
+    -#    %strong Comment:
+    -#    = comment.text
 
 
-      %h5 Add a comment:
-      = form_for([@post, @post.comments.build]) do |f|
-        %p
-          = f.label :text
-          %br/
-          = f.text_area :text
-        %p
-          = f.submit
+    %h5 Add a comment:
+    = form_for([@post, @post.comments.build]) do |f|
+      %p
+        = f.text_area :text
+      %p
+        = f.submit
 
-    - if current_user.id == @post.user.id
-      = link_to 'Edit', edit_post_path(@post)
-  -#  \|
-  -#  = link_to 'Back', user_path(current_user.id)
-  -#- else
-  -#  = link_to 'Back', user_path(current_user.id)
+  - if current_user.id == @post.user.id
+    = link_to 'Edit', edit_post_path(@post)

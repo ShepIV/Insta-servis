@@ -17,7 +17,7 @@ class UsersController < ApplicationController
 
   def update
     respond_to do |format|
-      if @users.update(users_params)
+      if @user.update(users_params)
         format.html { redirect_to @user, notice: 'Profile was successfully updated.' }
         format.json { render :show, status: :ok, location: @user }
       else
@@ -38,13 +38,11 @@ class UsersController < ApplicationController
   end
 
   def followers
-    @user = User.find(params[:id])
     @followers = @user.followers(User)
     @users = User.all
   end
 
   def followees
-    @user = User.find(params[:id])
     @followees = @user.followees(User)
     @users = User.all
   end
@@ -58,7 +56,7 @@ class UsersController < ApplicationController
   end
 
   def users_params
-    params.require(:user).permit(:title, :content, :image, :avatar, :first_name, :second_name)
+    params.require(:user).permit(:id,  :first_name, :second_name, :avatar)
   end
 
 

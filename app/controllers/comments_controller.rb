@@ -1,17 +1,22 @@
 class CommentsController < ApplicationController
-  before_action :set_comment, only: [:create, :show, :edit, :update, :destroy]
+  before_action :set_post
+  before_action :set_comment, only: [:show, :edit, :update, :destroy]
 
-  # GET /comments/1/edit
+
+  def new
+
+  end
+  #
+  def show
+
+  end
   def edit
 
-    def show
-
-    end
-
+  end
   # POST /comments
   # POST /comments.json
   def create
-    @post = Post.find(params[:post_id])
+    @comment = Comment.new(comment_params)
     @comment = @post.comments.create(comment_params.merge(user_id: current_user.id))
     redirect_to post_path(@post)
   end
@@ -41,15 +46,21 @@ class CommentsController < ApplicationController
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_comment
-      @comment = @post.comments.find(params[:id])
-    end
+  # Use callbacks to share common setup or constraints between actions.
 
-    # Never trust parameters from the scary internet, only allow the white list through.
-    def comment_params
-      params.require(:comment).permit(:text, :user_id, :post_id)
-    end
+  def set_post
+    @post = Post.find(params[:post_id])
+  end
+
+  def set_comment
+    # @post = Post.find(params[:post_id])
+    @comment = @post.comments.find(params[:id])
+  end
+
+  # Never trust parameters from the scary internet, only allow the white list through.
+  def comment_params
+    params.require(:comment).permit(:text, :user_id, :post_id)
   end
 end
+
 

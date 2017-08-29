@@ -1,16 +1,44 @@
-%li.list-group-item.clearfix
-  = link_to conversation.subject, conversation_path(conversation)
-  .btn-group-vertical.pull-right
+.media
+  .media-left
+    %a{:href => "#"}
+      %img.media-object{:alt => "...", :src => "http://placehold.it/64x64"}/
+  .media-body
+    %h4.media-heading
+      = conversation.originator.first_name
+      %br/
+      %small
+        %b Subject:
+        = conversation.subject
+      %br/
+      %small
+        %b Date:
+        = conversation.messages.last.created_at.strftime("%A, %b %d, %Y at %I:%M%p")
+    = truncate conversation.messages.last.body, length: 145
+    = link_to "View", conversation_path(conversation)
+.row
+  .spacer
+  -#.col-md-6
+  -#  = link_to "Compose", new_conversation_path, class: "btn btn-success"
+  .col-md-6.text-right
     - if conversation.is_trashed?(current_user)
-      = link_to 'Restore', restore_conversation_path(conversation), class: 'btn btn-xs btn-info', method: :post
+      = link_to 'Untrash', untrash_conversation_path(conversation), class: 'btn btn-info', method: :post
     - else
-      = link_to 'Move to trash', conversation_path(conversation), class: 'btn btn-xs btn-danger', method: :delete, |
+      = link_to 'Move to trash', trash_conversation_path(conversation), class: 'btn btn-danger', method: :post, |
         data: {confirm: 'Are you sure?'}
-    - if conversation.is_unread?(current_user)
-      = link_to 'Mark as read', mark_as_read_conversation_path(conversation), class: 'btn btn-xs btn-info', method: :post
-
-  -#%p= render 'conversations/participant', conversation: conversation
-  %p
-    = conversation.last_message.body
-    %small
-      %span.text-muted>= conversation.last_message.created_at.strftime("%-d %B %Y, %H:%M:%S")
+-#.row
+-#  .spacer
+-#  .col-md-4
+-#    .panel.panel-default
+-#      .panel-body
+-#        = render 'mailbox/folders'
+  -#.col-md-8
+  -#  .panel.panel-default
+  -#    .panel-body
+  -#      = render partial: 'conversations/messages'
+  -#    .panel-footer
+  -#      / Reply Form
+  -#      = form_for :message, url: reply_conversation_path(conversation) do |f|
+  -#        .form-group
+  -#          = f.text_area :body, placeholder: "Reply Message", rows: 4, class: "form-control"
+  -#        = f.submit "Reply", class: 'btn btn-danger pull-right'
+  -#      .clearfix

@@ -3,31 +3,27 @@
 -#%p.text-center.notice= notice
 -#%p.text-center.alert= alert
 
-- if !flash[:notice].blank?
-  .alert.alert-info
-    = flash[:notice]
 %body.bg
   .container
     .row
       .main-login.main-center
-        %form.form-horizontal{:action => "#", :method => "post"}
-          = form_for @user do |f|
-            - if @user.errors.any?
-              #error_explanation
-                %h2= "#{pluralize(@user.errors.count, "error")} prohibited this profile from being saved:"
-                %ul
-                  - @user.errors.full_messages.each do |msg|
-                    %li= msg
-            .field.text-center
-              = f.label :first_name
-              = f.text_field :first_name
-            .field.text-center
-              = f.label :second_name
-              = f.text_field :second_name
+        = form_for @user, html: { multipart: true } do |f|
+          - if @user.errors.any?
+            #error_explanation
+              %h2= "#{pluralize(@user.errors.count, "error")} prohibited this profile from being saved:"
+              %ul
+                - @user.errors.full_messages.each do |msg|
+                  %li= msg
+          .field.text-center
+            = f.label :first_name
+            = f.text_field :first_name
+          .field.text-center
+            = f.label :second_name
+            = f.text_field :second_name
 
-            .field.text-center.act
-              = f.label :avatar
-              = f.file_field :avatar
+          .field.text-center.act
+            = f.label :avatar
+            = f.file_field :avatar
 
             .actions.text-center.act
               = f.submit 'Save'
