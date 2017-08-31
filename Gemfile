@@ -45,6 +45,8 @@ gem 'chosen-rails'
 
 gem 'bootstrap-social-rails'
 
+gem 'font-awesome-sass'
+
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 gem 'rails', '~> 5.1.2'
 # Use mysql as the database for Active Record

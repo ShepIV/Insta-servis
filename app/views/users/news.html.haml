@@ -1,49 +1,55 @@
-%h3.text-center NEWS
-.card{style: 'width: 70rem'}
-  - if current_user.followees(User).count == 0
-    %h3.text-center Новостей нет
-  - else
-    .card
-      - Post.where(user_id: current_user.followees(User).pluck(:id)).each do |post|
-        %a.text-center.thumbnail{href: post_path(post.id)}
-          %p= image_tag post.image
-        %p.account-name= link_to("#{post.user.first_name} #{post.user.second_name}", user_path(post.user))
-        .card-block
-          -#= render partial: 'posts/like_button', locals: {post: post}
-          .like_button
-            - if current_user.likes?(post)
-              = link_to unlikes_post_path(post), method: :post, remote: true do
-                %i.glyphicon.glyphicon-star
-            - else
-              = link_to likes_post_path(post), method: :post, remote: true do
-                %i.glyphicon.glyphicon-star-empty
-            = post.likers(User).count
-
-        %p.timestamp= post.created_at.strftime("%-d %B %Y, %H:%M:%S")
-        %h4.card-title= post.name
-        %p.card-text= post.description
-
-        .row
-          .col-sm-12
-            %h2 User Comment
-        - Comment.where(post_id: post.id).each do |comment|
+%link{:href => "//netdna.bootstrapcdn.com/twitter-bootstrap/2.3.2/css/bootstrap-combined.min.css", :rel => "stylesheet"}
+-# так надо
+.container
+  %h3.text-center NEWS
+  .card.card-news{style: 'width: 70rem'}
+    - if current_user.followees(User).count == 0
+      %h3.text-center Новостей нет
+    - else
+      .card
+        - Post.where(user_id: current_user.followees(User).pluck(:id)).each do |post|
           .row
-            .col-sm-2
-              %img= image_tag comment.user.avatar.url
-            .col-sm-5
-              .panel.panel-default
-                .panel-heading
-                  %strong= link_to("#{comment.user.first_name} #{comment.user.second_name}", user_path(comment.user))
-                  %span.text-muted #{comment.created_at.strftime("%-d %B %Y, %H:%M:%S")}
-                .panel-body
-                  = comment.text
+            .news-name{style: 'display: inline-block'}
+              .img-img2= image_tag("#{post.user.avatar.url}", class: 'img-img2')
+              %a.account-name= link_to("#{post.user.first_name} #{post.user.second_name}", user_path(post.user))
 
-        %h5 Add a comment:
-        = form_for([post, post.comments.build]) do |f|
-          %p
-            = f.label :text
-            %br/
-            = f.text_area :text
-          %p
-            = f.submit
+          %a.text-center.thumbnail{href: post_path(post.id)}
+            %p= image_tag post.image
+
+          .card-block.news
+            .like_button{class: "post-like-#{post.id}"}
+              - if current_user.likes?(post)
+                = link_to unlikes_post_path(post), method: :post, remote: true do
+                  %i.glyphicon.glyphicon-star
+              - else
+                = link_to likes_post_path(post), method: :post, remote: true do
+                  %i.glyphicon.glyphicon-star-empty
+              = post.likers(User).count
+
+          %p.card-text.news= post.description
+          %p.timestamp.news= post.created_at.strftime("%-d %B %Y, %H:%M:%S")
+
+          .row.news
+            .col-sm-12
+              %h2.text-center User Comment
+          - Comment.where(post_id: post.id).each do |comment|
+            .row.news-coment
+              .col-sm-2.news
+                %img= image_tag comment.user.avatar.url
+              .col-sm-5
+                .panel.panel-default
+                  .panel-heading
+                    %strong= link_to("#{comment.user.first_name} #{comment.user.second_name}", user_path(comment.user))
+                    %span.text-muted #{comment.created_at.strftime("%-d %B %Y, %H:%M:%S")}
+                  .panel-body
+                    = comment.text
+          .col-sm-5
+            %h5 Add a comment:
+            = form_for([post, post.comments.build]) do |f|
+              %p
+                = f.label :text
+                %br/
+                = f.text_area :text
+              %p
+                = f.submit
 

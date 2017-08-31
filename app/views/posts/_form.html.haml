@@ -11,17 +11,16 @@
               %ul
                 - @post.errors.full_messages.each do |message|
                   %li= message
-          .field.text-center
-            = f.label :name
-            = f.text_field :name
+          -#.field.text-center
+          -#  = f.label :name
+          -#  = f.text_field :name
           .field.text-center
             = f.label :description
             = f.text_area :description
           .field.text-center
             = f.label :image
-            = f.file_field :image
-
-          .actions.text-center
+            .post-new= f.file_field :image
+          .actions.text-center{style: 'padding-top: 30px'}
             = f.submit 'Save'
 
 

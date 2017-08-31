@@ -13,6 +13,7 @@ class PostsController < ApplicationController
   # GET /posts/1
   # GET /posts/1.json
   def show
+
   end
 
   # GET /posts/new
@@ -37,6 +38,7 @@ class PostsController < ApplicationController
         format.html { render :new }
         format.json { render json: @post.errors, status: :unprocessable_entity }
       end
+      format.js
     end
   end
 
@@ -53,6 +55,7 @@ class PostsController < ApplicationController
         format.html { render :edit }
         format.json { render json: @post.errors, status: :unprocessable_entity }
       end
+      format.js
     end
   end
 

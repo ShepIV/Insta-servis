@@ -18,8 +18,8 @@
 @import "bootstrap";
 @import "profile2";
 @import "devise";
-@import "profiles";
-//@import "users";
+//@import "profiles";
+@import "users";
 //@import "switchery";
 @import "comments";
 @import "home";
@@ -27,3 +27,7 @@
 @import "news";
 @import "conversations";
 @import 'chosen';
+@import "posts";
+
+@import "font-awesome-sprockets";
+@import "font-awesome";

@@ -1,41 +1,44 @@
-%h3.text-center Following from #{@user.first_name} #{@user.second_name}
 .container
-  - if @user.followees(User).count == 0
-    %h3 подписок нет
+  - if current_user != @user
+    %h3.text-center Following from #{@user.first_name} #{@user.second_name}
   - else
-    %tbody
-      - @user.followees(User).each do |profile|
-        .row.header-menu
-          .col-xs-2
-            %img.img-circle{alt: 'Cinque Terre', width: '350', height: '350', src: "#{profile.avatar.url}"}/
-          .col-xs-10
-            .panel
-              - if profile.first_name == nil
-                %h2= link_to('NO NAME', user_path(profile))
-              - else
-                %h2= link_to("#{profile.first_name} #{profile.second_name}", user_path(profile))
-              - if current_user == profile
-                %span{style: 'padding-left: 50px; padding-bottom: 15px display: inline-block'}
-                = link_to 'Редактировать профиль', edit_user_path(profile), class: 'btn btn-secondary'
-              - else
-                %span.opacity чужой аккаунт
-              - if current_user.id == profile.id
-                %span{style: 'padding-left: 50px; padding-bottom: 15px'}
-                = link_to 'New photo', new_post_path, class: 'btn btn-secondary'
-            .panel2{style: 'display: inline-block'}
-              .col-xs-12{style: 'display: inline-block'}
+    %h3.text-center Your following
+  .container
+    - if @user.followees(User).count == 0
+      %h3 подписок нет
+    - else
+      %tbody
+        - @user.followees(User).each do |user|
+          .row.header-menu
+            .col-xs-2
+              .img-img= image_tag("#{user.avatar.url}", class: 'img-img')
+            .col-xs-9.panel-name
+              .panel.panel-follow
+                - if user.first_name == nil
+                  %h2= link_to('NO NAME', user_path(user))
+                - else
+                  %h2= link_to("#{user.first_name} #{user.second_name}", user_path(user))
+                -#- if current_user == user
+                -#  %span{style: 'padding-left: 50px; padding-bottom: 15px display: inline-block'}
+                -#  = link_to 'Редактировать профиль', edit_user_path(user), class: 'btn btn-secondary'
+                -#- else
+                -#  %span.opacity чужой аккаунт
+                -#- if current_user.id == user.id
+                -#  %span{style: 'padding-left: 50px; padding-bottom: 15px'}
+                -#  = link_to 'New photo', new_post_path, class: 'btn btn-secondary'
+              .panel2{style: 'display: inline-block'}
                 %p.h4{style: 'display: inline-block'}
                   Photos
-                  %span #{profile.posts.count}
+                  %span #{user.posts.count}
                 %p.h4{style: 'display: inline-block'}
-                  = link_to("Followers #{profile.followers(User).count}", followers_user_path(profile))
+                  = link_to("Followers #{user.followers(User).count}", followers_user_path(user))
                 %p.h4{style: 'display: inline-block'}
-                  = link_to("Following #{profile.followees(User).count}", followees_user_path(profile))
+                  = link_to("Following #{user.followees(User).count}", followees_user_path(user))
                   %span
-              .col-xs-5
-                - if current_user != profile
-                  .follow-unfollow
-                    - if current_user.follows?(profile)
-                      = link_to('Unfollow', unfollow_user_path(profile), method: :post, remote: true)
-                    - else
-                      = link_to('Follow', follow_user_path(profile), method: :post, remote: true)
+                -#.col-xs-5
+                -#  - if current_user != user
+                -#    .follow-unfollow
+                -#      - if current_user.follows?(user)
+                -#        = link_to('Unfollow', unfollow_user_path(user), method: :post, remote: true)
+                -#      - else
+                -#        = link_to('Follow', follow_user_path(user), method: :post, remote: true)

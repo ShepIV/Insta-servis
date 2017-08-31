@@ -66,9 +66,9 @@
   box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.06);
 }
 
-.compNoComp .compContainer, .compContainerLoading {
-  background-color: #444;
-}
+//.compNoComp .compContainer, .compContainerLoading {
+//  background-color: #444;
+//}
 
 .compPhoto {
   position: absolute;
@@ -89,7 +89,7 @@
 }
 
 .compPhotoShadow {
-  border: 1px solid rgba(255, 255, 255, 0.15);
+  //border: 1px solid rgba(255, 255, 255, 0.15);
   bottom: 0;
   display: block;
   left: 0;
@@ -194,6 +194,7 @@
   li{
     padding: 5px;
     width: 200px;
+    height: 300px;
   }
   .meta{
     text-align:center;
@@ -682,3 +683,69 @@
 ul.thumbnails li{
   margin: 5px !important;
 }
+
+.img-img{
+  width: 200px;
+  height: 200px;
+  background-size: cover;
+  display: block;
+  border-radius: 100px;
+  -webkit-border-radius: 100px;
+  -moz-border-radius: 100px;
+}
+
+.img-img2 {
+  width: 50px;
+  height: 50px;
+  background-size: cover;
+  display: block;
+  border-radius: 100px;
+  -webkit-border-radius: 100px;
+  -moz-border-radius: 100px;
+  float: left;
+}
+
+.panel-follow{
+  margin-top: 10px;
+}
+.header-menu{
+  margin-top: 25px;
+}
+
+.span4{
+  width: 300px
+}
+
+.panel-name{
+  margin-left: 35px;
+}
+
+.img-profile{
+  min-height: 100px;
+  display: block;
+  width: 340px;
+  height: 275px;
+}
+.img-profile1{
+  max-height: 250px
+}
+
+.news{
+  margin-left: 20px;
+  float: left;
+}
+
+.news-name{
+  margin-left: 50px;
+  float: left;
+}
+
+.news-coment{
+  margin-left: 10px;
+  margin-bottom: 20px;
+  //float: left;
+}
+//
+//.panel2{
+//  margin-left: 10px;
+//}

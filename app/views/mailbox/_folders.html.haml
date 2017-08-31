@@ -1,7 +1,7 @@
-%ul.nav.nav-pills.nav-stacked
-  %li.nav-item{:class => "#{active_page(:inbox)}"}= link_to 'Inbox', mailbox_inbox_path
+%ul.nav.nav-pills.nav-stacked{style: 'display: inline-block'}
+  %li.nav-item{class: "#{active_page(:inbox)}"}= link_to 'Inbox', mailbox_inbox_path
 
-  %li{:class => "#{active_page(:sent)}"}= link_to 'Sent', mailbox_sent_path
+  %li{class: "#{active_page(:sent)}"}= link_to 'Outbox', mailbox_sent_path
 
-  %li{:class => "#{active_page(:trash)}"}= link_to 'Trash', mailbox_trash_path
+  %li{class: "#{active_page(:trash)}"}= link_to 'Trash', mailbox_trash_path
 

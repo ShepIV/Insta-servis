@@ -1,0 +1,10 @@
+.row.news-coment
+  .col-sm-2
+    %img= image_tag comment.user.avatar.url
+  .col-sm-5
+    .panel.panel-default
+      .panel-heading
+        %strong= link_to("#{comment.user.first_name} #{comment.user.second_name}", user_path(comment.user))
+        %span.text-muted #{comment.created_at.strftime('%-d %B %Y, %H:%M:%S')}
+      .panel-body
+        = comment.text

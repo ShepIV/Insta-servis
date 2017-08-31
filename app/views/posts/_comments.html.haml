@@ -1,0 +1,16 @@
+%link{:href => "//netdna.bootstrapcdn.com/twitter-bootstrap/2.3.2/css/bootstrap-combined.min.css", :rel => "stylesheet"}
+-# так надо
+.container
+  .row.news
+    .col-sm-12.news#comments
+      %h2 Users Comments
+      - @post.comments.order(:created_at).reverse.each do |comment|
+        = render 'comment', comment: comment
+
+    .news
+      %h5 Add a comment:
+      = form_for [@post, @post.comments.build], remote: true do |f|
+        %p
+          = f.text_area :text
+        %p
+          = f.submit

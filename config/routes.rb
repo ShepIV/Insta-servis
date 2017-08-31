@@ -25,6 +25,7 @@ Rails.application.routes.draw do
     end
   end
 
+  get 'mailbox' => 'mailbox#index', as: :mailbox_index
   get "mailbox/inbox" => "mailbox#inbox", as: :mailbox_inbox
   get "mailbox/sent" => "mailbox#sent", as: :mailbox_sent
   get "mailbox/trash" => "mailbox#trash", as: :mailbox_trash

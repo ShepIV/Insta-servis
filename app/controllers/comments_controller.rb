@@ -18,7 +18,13 @@ class CommentsController < ApplicationController
   def create
     @comment = Comment.new(comment_params)
     @comment = @post.comments.create(comment_params.merge(user_id: current_user.id))
-    redirect_to post_path(@post)
+    respond_to do |format|
+      if @comment.save
+        format.html { redirect_to :back }
+        format.json
+        format.js
+      end
+    end
   end
 
   # PATCH/PUT /comments/1
@@ -28,9 +34,11 @@ class CommentsController < ApplicationController
       if @comment.update(comment_params)
         format.html { redirect_to @comment, notice: 'Comment was successfully updated.' }
         format.json { render :show, status: :ok, location: @comment }
+        format.js
       else
         format.html { render :edit }
         format.json { render json: @comment.errors, status: :unprocessable_entity }
+        format.js
       end
     end
   end
