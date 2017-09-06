@@ -2,16 +2,19 @@ class CommentsController < ApplicationController
   before_action :set_post
   before_action :set_comment, only: [:show, :edit, :update, :destroy]
 
+  def index
+    @comments = @post.comments.order(:created_at).page(params[:page]).per(3)
+    puts 'Controller'
+    puts @comments.count
+  end
 
   def new
-
   end
   #
   def show
-
   end
-  def edit
 
+  def edit
   end
   # POST /comments
   # POST /comments.json

@@ -50,6 +50,15 @@ class UsersController < ApplicationController
   def news
   end
 
+  def search
+    if params[:q].nil?
+      @users = []
+    else
+      @users = User.search params[:q]
+    end
+  end
+
+
   private
   def set_user
     @user = User.find(params[:id])

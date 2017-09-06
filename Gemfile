@@ -35,9 +35,9 @@ gem 'letter_opener', group: :development
 
 gem 'mailboxer'
 
-gem 'bootstrap-will_paginate'
-
-gem 'will_paginate'
+# gem 'bootstrap-will_paginate'
+#
+# gem 'will_paginate'
 
 gem 'jquery-turbolinks'
 
@@ -46,6 +46,9 @@ gem 'chosen-rails'
 gem 'bootstrap-social-rails'
 
 gem 'font-awesome-sass'
+
+gem 'elasticsearch-model', github: 'elastic/elasticsearch-rails', branch: '5.x'
+gem 'elasticsearch-rails', github: 'elastic/elasticsearch-rails', branch: '5.x'
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 gem 'rails', '~> 5.1.2'
@@ -70,6 +73,8 @@ gem 'jbuilder', '~> 2.5'
 # gem 'redis', '~> 3.0'
 # Use ActiveModel has_secure_password
 # gem 'bcrypt', '~> 3.1.7'
+
+gem 'kaminari'
 
 # Use Capistrano for deployment
 # gem 'capistrano-rails', group: :development

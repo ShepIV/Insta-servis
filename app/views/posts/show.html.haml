@@ -18,15 +18,17 @@
 
       .like_button{class: "post-like-#{@post.id}"}
         - if current_user.likes?(@post)
-          = link_to '<i class="fa fa-heart-o" aria-hidden="true"></i>'.html_safe, unlikes_post_path(@post), method: :post, remote: true
+          = link_to unlikes_post_path(@post), method: :post, remote: true do
+            %i.fa.fa-heart
         - else
-          = link_to '<i class="fa fa-heart-o"></i>'.html_safe, likes_post_path(@post), method: :post, remote: true
+          = link_to likes_post_path(@post), method: :post, remote: true do
+            %i.fa.fa-heart-o
         = @post.likers(User).count
 
       %p.timestamp #{@post.created_at.strftime('%-d %B %Y, %H:%M:%S')}
 
-    #com
-      = render 'comments'
+    #com{class: "com-#{@post.id}"}
+      = render 'comments', post: @post
     -#.row
     -#  .col-sm-12.news
     -#    %h2 Users Comments

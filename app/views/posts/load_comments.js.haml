@@ -1,0 +1,3 @@
+- @comments.each do |comment|
+  $("#post-comments-#{@post.id}").append('#{j render 'posts/comment', post: @post, comment: comment}');
+$('.load-more').href = "/load_comments?comment_id=" + "#{@comments.first.id}"

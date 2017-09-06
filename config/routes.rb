@@ -5,7 +5,7 @@ Rails.application.routes.draw do
 
 
   resources :posts do
-    resources :comments, except: [:index]
+    resources :comments
     member do
       post :likes
       post :unlikes
@@ -22,6 +22,7 @@ Rails.application.routes.draw do
       get :news
       post :likes
       post :unlikes
+      get :search
     end
   end
 
@@ -38,6 +39,8 @@ Rails.application.routes.draw do
       post :untrash
     end
   end
+
+  get 'search', to: 'search#search'
   # resources :profiles do
   #   member do
   #     post :follow

@@ -1,6 +1,6 @@
 class PostsController < ApplicationController
   before_action :authenticate_user!
-  before_action :set_post, only: [:show, :edit, :update, :destroy, :likes, :unlikes]
+  before_action :set_post, only: [:show, :edit, :update, :destroy, :likes, :unlikes, :load_comments]
 
   # GET /posts
   # GET /posts.json
@@ -81,14 +81,19 @@ class PostsController < ApplicationController
     # redirect_to :back, notice: "Unliked this post successfully!"
   end
 
+  def load_comments
+    @comments = Comment.order(created_at: :desc).where('id < ?', params[:comment_id]).limit(3)
+  end
+
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_post
+
       @post = Post.find(params[:id])
     end
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def post_params
-      params.require(:post).permit(:name, :description, :image)
+      params.require(:post).permit(:name, :description, :image, :comment_id)
     end
 end

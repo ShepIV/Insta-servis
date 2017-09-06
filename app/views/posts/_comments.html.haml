@@ -2,14 +2,17 @@
 -# так надо
 .container
   .row.news
-    .col-sm-12.news#comments
+    .col-sm-12.news{id: "post-comments-#{post.id}"}
       %h2 Users Comments
-      - @post.comments.order(:created_at).reverse.each do |comment|
-        = render 'comment', comment: comment
+      = link_to 'Load more', post_comments_path(post, page: 2), remote: true, class: 'load-more'
+      .comments_block
+        - post.comments.order(:created_at).last(3).each do |comment|
+          = render 'posts/comment', comment: comment
+
 
     .news
       %h5 Add a comment:
-      = form_for [@post, @post.comments.build], remote: true do |f|
+      = form_for [post, post.comments.build], remote: true do |f|
         %p
           = f.text_area :text
         %p
