@@ -1,0 +1,21 @@
+.row
+  .news-name{style: 'display: inline-block'}
+    .img-img2= image_tag("#{post.user.avatar.url}", class: 'img-img2')
+    %a.account-name= link_to("#{post.user.first_name} #{post.user.second_name}", user_path(post.user))
+
+  %a.text-center.thumbnail{href: post_path(post.id)}
+    %p= image_tag post.image
+
+  .card-block.news
+    .like_button{class: "post-like-#{post.id}"}
+      - if current_user.likes?(post)
+        = link_to unlikes_post_path(post), method: :post, remote: true do
+          %i.fa.fa-heart
+      - else
+        = link_to likes_post_path(post), method: :post, remote: true do
+          %i.fa.fa-heart-o
+      = post.likers(User).count
+
+  %p.card-text.news= post.description
+  %p.timestamp.news= post.created_at.strftime("%-d %B %Y, %H:%M:%S")
+  -#= render 'users/news', user: current_user
